@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.local
+*.env
+
+# Output / generated assets
+output/
+generated/
+*.zip
+test-output/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# OpenRouter cost tracking
+.cost-log.json
+
+# Style memory cache
+.icon-skills-cache/
