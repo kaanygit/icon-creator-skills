@@ -16,7 +16,8 @@ This is the highest-volume skill in the toolkit. The user describes an icon, opt
 | `colors` | no | string\|list | auto from prompt | Hex codes or palette name (e.g. `["#FF5733", "#1A1A1A"]`) |
 | `reference-image` | no | path | — | Path to PNG/JPG used as inspiration |
 | `variants` | no | int | 3 | Number of variants to produce. 1–6 supported. |
-| `model` | no | string | preset-derived | Override OpenRouter model id |
+| `provider` | no | enum | config/default | `openrouter`, `openai`, or `google` |
+| `model` | no | string | provider/config/preset-derived | Override provider model id |
 | `output-dir` | no | path | `output/` | Where to write the run directory |
 | `slug` | no | string | derived from description | Used in directory name |
 | `vectorize` | no | bool | false | Also run `png-to-svg` on the master |

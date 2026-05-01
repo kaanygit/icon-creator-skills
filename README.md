@@ -4,9 +4,9 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-black.svg)](CHANGELOG.md)
 
-Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
+Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Supports OpenRouter, OpenAI, and Google Gemini image providers. Designed to install into OpenCode, Codex, Claude Code, Cursor, and other agents through the open Skills CLI.
 
-> Status: **v1.0.0 release candidate**. All planned phases are implemented in the repo. Publishing to PyPI / marketplace directories is intentionally manual.
+> Status: **v1.0.0 + Phase 18 provider support**. The repo is public and installable through `npx skills add`.
 
 ---
 
@@ -99,7 +99,7 @@ Comparison output:
 
 You write a description, optionally drop a reference image, and get back:
 
-- A polished icon or mascot generated through OpenRouter
+- A polished icon or mascot generated through OpenRouter, OpenAI, or Google Gemini
 - A vectorized SVG (when the input is suitable)
 - A ready-to-ship asset pack: iOS `AppIcon.appiconset/`, Android `mipmap-*/` + adaptive icons, Web favicons + manifest, macOS, watchOS, Windows tiles
 - For mascots: master image, pose variants, expression variants, outfit variants, character sheet, pose-expression matrix, and `style-guide.md`
@@ -159,12 +159,6 @@ icon-creator-skills/
 │   ├── png-to-svg/
 │   ├── app-icon-pack/
 │   └── mascot-pack/
-```
-
-```
-
-Later skills such as `mascot-pack` and `icon-set-creator` are still phase-gated.
-
 ## Quick start
 
 ```bash
@@ -176,6 +170,52 @@ python skills/icon-creator/scripts/generate.py \
   --variants 3 \
   --seed 42
 ```
+
+## Install with `npx skills`
+
+This repo follows the open Skills CLI layout: every installable skill lives under
+`skills/<skill-name>/SKILL.md`. The Skills CLI discovers that structure automatically.
+
+List available skills:
+
+```bash
+npx skills add kaanygit/icon-creator-skills --list
+```
+
+Install all skills globally into OpenCode:
+
+```bash
+npx skills add kaanygit/icon-creator-skills \
+  --skill '*' \
+  --agent opencode \
+  --global \
+  --yes
+```
+
+Install only one skill:
+
+```bash
+npx skills add kaanygit/icon-creator-skills \
+  --skill icon-creator \
+  --agent opencode \
+  --global \
+  --yes
+```
+
+Useful install targets:
+
+```bash
+# Codex global skills
+npx skills add kaanygit/icon-creator-skills --skill '*' --agent codex --global --yes
+
+# Project-local skills for a team repo
+npx skills add kaanygit/icon-creator-skills --skill '*' --agent opencode --yes
+
+# Update later
+npx skills update icon-creator -g -y
+```
+
+The same package can be installed into other supported agents by changing `--agent`.
 
 ## Image provider setup
 
@@ -304,8 +344,8 @@ icon-skills doctor
 icon-skills cost
 ```
 
-`doctor` checks Python, required Python packages, optional native/vector dependencies, and
-OpenRouter key configuration without printing the key.
+`doctor` checks Python, required Python packages, optional native/vector dependencies, the default
+image provider, provider models, and API key configuration without printing key values.
 
 The final stdout line is the selected `master.png`. Each run writes:
 
@@ -393,9 +433,13 @@ If you want the **30-second pitch**: [docs/vision.md](docs/vision.md)
 
 If you want to **install and run it**: [docs/install.md](docs/install.md) → [docs/getting-started.md](docs/getting-started.md).
 
+If you want **OpenCode setup**: [docs/opencode.md](docs/opencode.md).
+
 If something fails: [docs/troubleshooting.md](docs/troubleshooting.md).
 
 If you want copy-paste workflows: [docs/recipes.md](docs/recipes.md).
+
+If you want a visual gallery: [docs/gallery.md](docs/gallery.md).
 
 If you want the **whole picture**: read in order — [vision](docs/vision.md) → [architecture](docs/architecture.md) → [phases overview](docs/phases/README.md).
 
@@ -411,7 +455,7 @@ If you want to know **why a decision was made**: [docs/decisions.md](docs/decisi
 - **Monorepo** for now. Split later if any single skill grows its own audience.
 - **Python**. Pillow / OpenCV / rembg / vtracer-py — image-processing ecosystem is unbeatable.
 - **MIT license**. Maximum reusability.
-- **OpenRouter as the only image-gen backend** in v1. User brings their own key. Replicate / fal.ai fallbacks are explicitly future work.
+- **OpenRouter default, OpenAI/Google optional.** User brings their own provider key. Replicate / fal.ai fallbacks are explicitly future work.
 - **Test at every phase.** Each phase ends with concrete acceptance tests, not "looks good."
 
 See [docs/decisions.md](docs/decisions.md) for the full rationale.

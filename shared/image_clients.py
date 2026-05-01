@@ -26,7 +26,7 @@ def create_image_client(
     config: dict[str, Any] | None = None,
     session: requests.Session | None = None,
 ):
-    resolved_config = config or load_config()
+    resolved_config = load_config() if config is None else config
     normalized = resolve_provider(provider, config=resolved_config)
     if normalized == "openrouter":
         return OpenRouterClient(config=resolved_config, session=session)
@@ -48,7 +48,7 @@ def normalize_provider(provider: str | None) -> str:
 
 
 def resolve_provider(provider: str | None = None, *, config: dict[str, Any] | None = None) -> str:
-    resolved_config = config or load_config()
+    resolved_config = load_config() if config is None else config
     configured = (resolved_config.get("image_generation") or {}).get("provider")
     normalized = normalize_provider(provider or configured or DEFAULT_PROVIDER)
     if normalized not in DEFAULT_PROVIDER_MODELS:
@@ -66,7 +66,8 @@ def resolve_model_for_provider(
     normalized = normalize_provider(provider)
     if requested_model:
         return requested_model
-    configured_model = _configured_model(normalized, config or load_config())
+    resolved_config = load_config() if config is None else config
+    configured_model = _configured_model(normalized, resolved_config)
     if configured_model:
         return configured_model
     if normalized == "openrouter" and prompt_model:
@@ -84,7 +85,8 @@ def fallback_models_for_provider(
     if requested_model:
         return []
     if normalize_provider(provider) == "openrouter":
-        configured = _configured_fallback_models(config or load_config())
+        resolved_config = load_config() if config is None else config
+        configured = _configured_fallback_models(resolved_config)
         if configured is not None:
             return configured
         return prompt_fallbacks

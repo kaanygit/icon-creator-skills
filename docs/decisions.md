@@ -72,6 +72,8 @@ See [docs/presets/mascot-types.md](presets/mascot-types.md) for the full taxonom
 
 ## ADR-005 · OpenRouter only in v1
 
+**Status.** Superseded after v1.0.0 by Phase 18 multi-provider support.
+
 **Context.** Replicate, fal.ai, direct provider APIs (OpenAI, Stability, Google) all generate images. We could abstract.
 
 **Decision.** OpenRouter as the only backend in v1. No abstraction layer beyond `openrouter_client`.
@@ -82,6 +84,10 @@ See [docs/presets/mascot-types.md](presets/mascot-types.md) for the full taxonom
 - The seam is still clear: any swap is a single module rewrite, no skill code touches the API
 
 **Consequences.** Users without an OpenRouter account need to create one. The barrier is one signup. v2 may introduce a `Backend` protocol if users genuinely want self-hosted Stable Diffusion or direct provider keys.
+
+**Update, 2026-05-01.** Phase 18 added a small provider factory and direct OpenAI/Google
+clients. OpenRouter remains the default, but users can select `openrouter`, `openai`, or
+`google` through `--provider` or `~/.icon-skills/config.yaml`.
 
 ---
 

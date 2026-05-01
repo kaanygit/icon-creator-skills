@@ -8,3 +8,5 @@ The root README includes committed previews from real local runs:
 - `docs/assets/examples/png-to-svg-comparison.png`
 
 These examples are intentionally small and static so the README stays fast on GitHub.
+
+See [../gallery.md](../gallery.md) for prompt, command, output, and expected file examples.

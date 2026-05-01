@@ -22,7 +22,8 @@ Naive approach (calling `icon-creator` 12 times in a loop) fails because the mod
 | `set-name` | no | string | derived | Used in output dir name |
 | `stroke-width` | no | enum | preset default | `thin` \| `regular` \| `bold` — only meaningful for outline/line presets |
 | `corner-radius` | no | enum | preset default | `sharp` \| `rounded` \| `pill` |
-| `model` | no | string | preset-derived | OpenRouter model id |
+| `provider` | no | enum | config/default | `openrouter`, `openai`, or `google` |
+| `model` | no | string | provider/config/preset-derived | Provider model id |
 | `output-dir` | no | path | `output/` | |
 | `seed-base` | no | int | random | Base seed; each icon uses `seed-base + i` for variety within consistency |
 

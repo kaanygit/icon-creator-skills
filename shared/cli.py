@@ -15,6 +15,7 @@ from PIL import Image
 
 from shared.config import load_config
 from shared.errors import IconSkillsError, InputError
+from shared.image_clients import resolve_model_for_provider, resolve_provider
 from shared.openrouter_client import COST_LOG_PATH
 from shared.security import scrub_text
 from shared.style_memory import list_styles, load_style, remove_style, save_style
@@ -66,14 +67,25 @@ def doctor() -> int:
     print(f"Python: {platform.python_version()}")
     print(f"Platform: {platform.platform()}")
     print(f"Pillow: {Image.__version__}")
-    key_status = _api_key_status(config)
-    print(f"OpenRouter API key: {key_status}")
+    selected_provider = resolve_provider(config=config)
+    print(f"Default image provider: {selected_provider}")
+    for provider in ("openrouter", "openai", "google"):
+        key_status = _api_key_status(config, provider)
+        model = resolve_model_for_provider(
+            provider=provider,
+            requested_model=None,
+            prompt_model="sourceful/riverflow-v2-fast-preview",
+            config=config,
+        )
+        marker = " (default)" if provider == selected_provider else ""
+        print(f"{provider} API key{marker}: {key_status}")
+        print(f"{provider} model{marker}: {model}")
     for module in ("yaml", "jinja2", "requests"):
         print(f"{module}: {'ok' if _module_exists(module) else 'missing'}")
     for optional in ("cairosvg", "vtracer", "imagetracer", "cv2"):
         print(f"{optional}: {'ok' if _module_exists(optional) else 'optional missing'}")
     print(f"potrace: {'ok' if shutil.which('potrace') else 'optional missing'}")
-    return 0 if key_status != "missing" else 1
+    return 0 if _api_key_status(config, selected_provider) != "missing" else 1
 
 
 def cost_summary() -> int:
@@ -153,7 +165,25 @@ def _run(command: list[str]) -> int:
     return completed.returncode
 
 
-def _api_key_status(config: dict[str, object]) -> str:
+def _api_key_status(config: dict[str, object], provider: str = "openrouter") -> str:
+    env_names = {
+        "openrouter": ("OPENROUTER_API_KEY",),
+        "openai": ("OPENAI_API_KEY",),
+        "google": ("GEMINI_API_KEY", "GOOGLE_API_KEY"),
+    }
+    for env_name in env_names.get(provider, ()):
+        if os.getenv(env_name):
+            return f"set in environment ({env_name})"
+    provider_config = config.get(provider) or {}
+    path_value = provider_config.get("api_key_file")  # type: ignore[union-attr]
+    if path_value and Path(str(path_value)).expanduser().exists():
+        return f"configured via {path_value}"
+    return "missing"
+
+
+def _openrouter_api_key_status(config: dict[str, object]) -> str:
+    """Backward-compatible helper for older internal imports."""
+
     if os.getenv("OPENROUTER_API_KEY"):
         return "set in environment"
     path_value = (config.get("openrouter") or {}).get("api_key_file")  # type: ignore[union-attr]

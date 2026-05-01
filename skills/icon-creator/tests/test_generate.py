@@ -42,12 +42,13 @@ class FakeClient:
 
 
 @pytest.fixture
-def generate_module() -> Any:
+def generate_module(monkeypatch: pytest.MonkeyPatch) -> Any:
     spec = importlib.util.spec_from_file_location("icon_creator_generate", SCRIPT_PATH)
     module = importlib.util.module_from_spec(spec)
     assert spec and spec.loader
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
+    monkeypatch.setattr(module, "load_config", lambda: {})
     return module
 
 

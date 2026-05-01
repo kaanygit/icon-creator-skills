@@ -20,7 +20,8 @@ A user describes a character ("wise old owl, professor, glasses"), picks a type 
 | `outfits` | no | list | `[]` | Outfit variants per master e.g. `["casual", "formal", "sporty"]` |
 | `reference-image` | no | path | — | Use existing character/style as anchor |
 | `mascot-name` | no | string | derived | Used in output dir name |
-| `model` | no | string | preset-derived | Override OpenRouter model id |
+| `provider` | no | enum | config/default | `openrouter`, `openai`, or `google` |
+| `model` | no | string | provider/config/preset-derived | Override provider model id |
 | `consistency-threshold` | no | float | 0.85 | Similarity score threshold for accepting variants |
 | `output-dir` | no | path | `output/` | |
 

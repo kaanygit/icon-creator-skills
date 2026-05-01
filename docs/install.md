@@ -6,7 +6,47 @@
 - A local API key for at least one generation provider: OpenRouter, OpenAI, or Google Gemini
 - Optional native tools for best vectorization quality: `potrace`, `cairosvg`, `vtracer`
 
-## From a clone
+## Install skills into OpenCode
+
+Install all skills globally:
+
+```bash
+npx skills add kaanygit/icon-creator-skills \
+  --skill '*' \
+  --agent opencode \
+  --global \
+  --yes
+```
+
+List the skills before installing:
+
+```bash
+npx skills add kaanygit/icon-creator-skills --list
+```
+
+Install one skill only:
+
+```bash
+npx skills add kaanygit/icon-creator-skills \
+  --skill icon-creator \
+  --agent opencode \
+  --global \
+  --yes
+```
+
+Install into Codex instead:
+
+```bash
+npx skills add kaanygit/icon-creator-skills \
+  --skill '*' \
+  --agent codex \
+  --global \
+  --yes
+```
+
+The Skills CLI discovers this repo because the skills live in `skills/<name>/SKILL.md`.
+
+## Local development install
 
 ```bash
 git clone https://github.com/kaanygit/icon-creator-skills.git
@@ -73,9 +113,9 @@ icon-skills doctor
 python -m pytest
 ```
 
-## OpenCode skills
+## Manual OpenCode fallback
 
-Add each skill folder to OpenCode's `skills.paths`:
+If you cannot use `npx skills`, add each skill folder to OpenCode's `skills.paths`:
 
 ```json
 {

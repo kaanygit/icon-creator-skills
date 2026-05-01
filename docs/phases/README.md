@@ -22,6 +22,8 @@ Phases are ordered to deliver **the most value as early as possible**:
 8. **Phase 13** icon-set-creator (relatively easier given prior work)
 9. **Phases 14-17** cross-cutting polish, docs, release
 10. **Phase 18** adds post-v1 multi-provider image backends and configurable model defaults
+11. **Phase 19** is skipped for now to avoid live provider quality-matrix spend
+12. **Phases 20-22** improve OpenCode UX, add a gallery, and document Skills CLI installation
 
 ## Phase index
 
@@ -47,6 +49,8 @@ Phases are ordered to deliver **the most value as early as possible**:
 | **16** | docs | — | README, examples, install, troubleshooting | [phase-16-docs.md](phase-16-docs.md) |
 | **17** | release | — | GitHub publish, version 1.0.0 | [phase-17-release.md](phase-17-release.md) |
 | **18** | shared/ + generation skills | — | OpenRouter/OpenAI/Google provider selection | [phase-18-acceptance.md](phase-18-acceptance.md) |
+| **19** | quality | — | Provider quality matrix, skipped for now | — |
+| **20-22** | docs + CLI UX | — | OpenCode UX, gallery, Skills CLI install | [phase-20-22-acceptance.md](phase-20-22-acceptance.md) |
 
 ## Acceptance test discipline
 
