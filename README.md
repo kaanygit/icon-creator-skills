@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 05 implemented**. `icon-creator` v0.3 supports presets, reference images, multi-variant generation, quality validation, and refinement. `app-icon-pack` supports iOS, Android, Web, macOS, watchOS, and Windows asset packs.
+> Status: **Phase 07 implemented**. `icon-creator` v0.3 supports presets, reference images, multi-variant generation, quality validation, and refinement. `app-icon-pack` supports iOS, Android, Web, macOS, watchOS, and Windows asset packs. `png-to-svg` supports SVG vectorization with local algorithm selection.
 
 ---
 
@@ -120,6 +120,16 @@ python skills/app-icon-pack/scripts/pack.py \
 ```
 
 The packer writes iOS, Android, Web, macOS, watchOS, Windows, a per-run `README.md`, and a zip.
+
+Vectorize an existing PNG master locally:
+
+```bash
+python skills/png-to-svg/scripts/vectorize.py \
+  --input output/minimal-fox-app-icon-{timestamp}/master.png \
+  --algorithm auto
+```
+
+No OpenRouter call is made for app-icon packaging or SVG vectorization.
 
 ---
 

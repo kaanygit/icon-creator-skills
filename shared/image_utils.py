@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from io import BytesIO
 from pathlib import Path
+from xml.etree import ElementTree
 
 from PIL import Image
 
@@ -153,20 +154,94 @@ def write_ico_multires(
 
 
 def rasterize_svg(path: str | Path, size: tuple[int, int]) -> Image.Image:
-    """Rasterize an SVG when cairosvg is installed."""
+    """Rasterize an SVG, using cairosvg when available and a basic rect fallback."""
 
     try:
         import cairosvg
     except ImportError as exc:
-        raise InputError(
-            "SVG input requires cairosvg. Install it or use a PNG master for app-icon-pack."
-        ) from exc
+        return _rasterize_basic_svg(path, size, exc)
 
     png_bytes = cairosvg.svg2png(url=str(path), output_width=size[0], output_height=size[1])
     if not isinstance(png_bytes, bytes):
         raise InputError(f"Could not rasterize SVG: {path}")
     with Image.open(BytesIO(png_bytes)) as image:
         return ensure_alpha(image)
+
+
+def compare_perceptual_similarity(
+    a: Image.Image | str | Path,
+    b: Image.Image | str | Path,
+    *,
+    size: int = 64,
+) -> float:
+    """Return a lightweight 0..1 visual similarity score."""
+
+    first = load_image(a) if isinstance(a, str | Path) else a.copy()
+    second = load_image(b) if isinstance(b, str | Path) else b.copy()
+    first = composite_on_bg(first, bg_color="#FFFFFF").resize(
+        (size, size),
+        Image.Resampling.LANCZOS,
+    )
+    second = composite_on_bg(second, bg_color="#FFFFFF").resize(
+        (size, size),
+        Image.Resampling.LANCZOS,
+    )
+
+    total_delta = 0
+    channels = 3
+    for left, right in zip(
+        _pixel_data(first.convert("RGB")),
+        _pixel_data(second.convert("RGB")),
+        strict=True,
+    ):
+        total_delta += sum(abs(left[index] - right[index]) for index in range(channels))
+    max_delta = size * size * channels * 255
+    return round(max(0.0, 1.0 - (total_delta / max_delta)), 4)
+
+
+def _rasterize_basic_svg(
+    path: str | Path,
+    size: tuple[int, int],
+    original_error: Exception,
+) -> Image.Image:
+    """Rasterize the simple rect-based SVGs emitted by png-to-svg's fallback tracer."""
+
+    try:
+        root = ElementTree.parse(path).getroot()
+    except ElementTree.ParseError as exc:
+        raise InputError(
+            "SVG rasterization requires cairosvg for non-basic SVG files."
+        ) from exc
+
+    namespace = "{http://www.w3.org/2000/svg}"
+    viewbox = root.attrib.get("viewBox", f"0 0 {size[0]} {size[1]}").split()
+    if len(viewbox) != 4:
+        raise InputError("SVG has unsupported viewBox")
+    _, _, view_w, view_h = [float(value) for value in viewbox]
+    scale_x = size[0] / view_w
+    scale_y = size[1] / view_h
+    output = Image.new("RGBA", size, (0, 0, 0, 0))
+
+    for rect in root.iter(f"{namespace}rect"):
+        fill = rect.attrib.get("fill", "#000000")
+        if fill == "none":
+            continue
+        x = int(round(float(rect.attrib.get("x", 0)) * scale_x))
+        y = int(round(float(rect.attrib.get("y", 0)) * scale_y))
+        width = max(1, int(round(float(rect.attrib.get("width", 0)) * scale_x)))
+        height = max(1, int(round(float(rect.attrib.get("height", 0)) * scale_y)))
+        alpha = int(round(float(rect.attrib.get("fill-opacity", "1")) * 255))
+        red, green, blue, _ = parse_hex_color(fill)
+        patch = Image.new("RGBA", (width, height), (red, green, blue, alpha))
+        output.alpha_composite(patch, (x, y))
+
+    return output
+
+
+def _pixel_data(image: Image.Image):
+    if hasattr(image, "get_flattened_data"):
+        return image.get_flattened_data()
+    return image.getdata()
 
 
 def compose_grid(

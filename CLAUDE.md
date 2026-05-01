@@ -13,9 +13,9 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 05 implemented. Shared infrastructure, `icon-creator` v0.3, and `app-icon-pack` v1.1 exist.**
+**Phase 07 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, and `png-to-svg` v0.2 exist.**
 
-This repo now includes shared infrastructure under `shared/`, `icon-creator`, and `app-icon-pack`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. Later skill folders are still phase-gated.
+This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, and `png-to-svg`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. Later skill folders are still phase-gated.
 
 Current / target layout:
 
@@ -29,7 +29,7 @@ icon-creator-skills/
 │   ├── icon-creator/                 # phases 1-3
 │   ├── icon-set-creator/             # phase 13
 │   ├── mascot-creator/               # phases 8-11
-│   ├── png-to-svg/                   # phases 6-7
+│   ├── png-to-svg/                   # phases 6-7 implemented
 │   ├── app-icon-pack/                # phases 4-5 implemented
 │   └── mascot-pack/                  # phase 12
 └── tests/
