@@ -1,0 +1,20 @@
+openrouter:
+  base_url: https://openrouter.ai/api/v1
+  timeout_seconds: 60
+  max_retries: 5
+  app_name: icon-creator-skills
+  http_referer: https://github.com/kaanygit/icon-creator-skills
+
+image:
+  default_master_size: 1024
+  default_pad_color: [0, 0, 0, 0]
+
+cost:
+  per_call_threshold_usd: 1.00
+  session_threshold_usd: 5.00
+  per_call_hard_cap_usd: 10.00
+
+logging:
+  level: INFO
+  per_run_logs: true
+

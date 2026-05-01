@@ -1,0 +1,13 @@
+models:
+  google/gemini-2.5-flash-image:
+    per_image_usd: 0.0144
+    notes: "Planning estimate; verify against OpenRouter before release."
+
+  black-forest-labs/flux.2-pro:
+    per_image_usd: 0.04
+    notes: "Planning estimate; verify against OpenRouter before release."
+
+  black-forest-labs/flux.2-flex:
+    per_image_usd: 0.04
+    notes: "Planning estimate; verify against OpenRouter before release."
+

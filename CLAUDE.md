@@ -13,18 +13,18 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Planning phase. Zero code. Only design documents.**
+**Phase 00 implemented. Shared infrastructure exists; no user-facing skills yet.**
 
-Everything in this repo today is design-time documentation. No `pyproject.toml` yet, no `shared/` package yet, no `skills/` folder yet. Those are produced by phases 0+ when implementation starts.
+This repo now includes the Phase 00 Python package skeleton under `shared/`, along with pyproject/test/lint/CI scaffolding. The `skills/` folder does not exist yet; it starts in Phase 01.
 
 When implementation begins, the layout will become:
 
 ```
 icon-creator-skills/
 ├── README.md, LICENSE, CLAUDE.md
-├── pyproject.toml                    # added in phase 0
+├── pyproject.toml                    # package + dev tooling
 ├── docs/                             # design docs (already exist)
-├── shared/                           # added in phase 0
+├── shared/                           # Phase 00 shared package
 ├── skills/                           # added per phase
 │   ├── icon-creator/                 # phases 1-3
 │   ├── icon-set-creator/             # phase 13

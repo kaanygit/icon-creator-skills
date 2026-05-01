@@ -1,0 +1,78 @@
+models:
+  google/gemini-2.5-flash-image:
+    status: selected
+    provider: google
+    output_modalities: [text, image]
+    default_modalities: [image, text]
+    supports_text_to_image: true
+    supports_image_input: true
+    supports_image_edit: true
+    pricing_basis: tokens
+    notes: "Default general-purpose image model for Phase 00 smoke tests."
+
+  black-forest-labs/flux.2-pro:
+    status: selected
+    provider: black-forest-labs
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: true
+    supports_image_input: true
+    supports_image_edit: true
+    pricing_basis: megapixel
+    notes: "High-quality fallback and reference-heavy candidate."
+
+  black-forest-labs/flux.2-flex:
+    status: candidate
+    provider: black-forest-labs
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: true
+    supports_image_input: true
+    supports_image_edit: true
+    pricing_basis: megapixel
+    notes: "Candidate for Phase 02/09 visual tests."
+
+  openai/dall-e-3:
+    status: retired
+    provider: openai
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: false
+    supports_image_input: false
+    supports_image_edit: false
+    pricing_basis: unknown
+    notes: "OpenRouter currently reports this model as unavailable."
+
+  black-forest-labs/flux-1.1-pro:
+    status: retired
+    provider: black-forest-labs
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: false
+    supports_image_input: false
+    supports_image_edit: false
+    pricing_basis: unknown
+    notes: "Older planning-doc ID; use current flux.2 models instead."
+
+  black-forest-labs/flux-redux:
+    status: retired
+    provider: black-forest-labs
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: false
+    supports_image_input: false
+    supports_image_edit: false
+    pricing_basis: unknown
+    notes: "Do not assume this exact ID exists; verify through OpenRouter discovery."
+
+  stability-ai/stable-diffusion-3.5:
+    status: retired
+    provider: stability-ai
+    output_modalities: [image]
+    default_modalities: [image]
+    supports_text_to_image: false
+    supports_image_input: false
+    supports_image_edit: false
+    pricing_basis: unknown
+    notes: "Not selected for v1 defaults until availability and pricing are verified."
+

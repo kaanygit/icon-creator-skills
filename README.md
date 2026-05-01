@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **planning phase**. No code yet. This repo currently contains the full design and phased build plan.
+> Status: **Phase 00 implemented**. Shared Python infrastructure exists; user-facing skills have not been implemented yet.
 
 ---
 
@@ -32,12 +32,13 @@ All driven by a Python skill triggered through your agent of choice.
 
 ---
 
-## Repo layout (target)
+## Repo layout
 
 ```
 icon-creator-skills/
 ├── README.md
 ├── LICENSE                       # MIT
+├── pyproject.toml                 # Python package + dev tooling
 ├── docs/                         # full design documents (this is what's here today)
 │   ├── vision.md
 │   ├── architecture.md
@@ -45,29 +46,30 @@ icon-creator-skills/
 │   ├── risks.md
 │   ├── skills/                   # per-skill specs (6 files)
 │   ├── shared/                   # shared module specs (7 files)
-│   ├── presets/                  # style + type catalogs (3 files)
+│   ├── presets/                  # style/type catalogs + model matrix
 │   ├── platforms/                # asset size tables per platform (7 files)
 │   ├── quality/                  # cross-cutting quality features (5 files)
-│   └── phases/                   # phased build plan (18 files)
-├── skills/                       # actual skill implementations (added as phases land)
+│   └── phases/                   # phased build plan + acceptance records
+├── shared/                       # Phase 00 shared Python package
+│   ├── openrouter_client.py
+│   ├── image_utils.py
+│   ├── config.py
+│   ├── errors.py
+│   ├── logging_setup.py
+│   ├── smoke_test.py
+│   └── presets/
+└── skills/                       # planned; actual skill implementations added as phases land
 │   ├── icon-creator/
 │   ├── icon-set-creator/
 │   ├── mascot-creator/
 │   ├── png-to-svg/
 │   ├── app-icon-pack/
 │   └── mascot-pack/
-└── shared/                       # Python modules used by all skills
-    ├── openrouter_client.py
-    ├── vision_analyzer.py
-    ├── prompt_builder.py
-    ├── image_utils.py
-    ├── consistency_checker.py
-    ├── quality_validator.py
-    └── presets/
-        ├── icon_styles.yaml
-        ├── mascot_styles.yaml
-        └── prompt_templates/
 ```
+
+```
+
+Planned later shared modules (`vision_analyzer`, `prompt_builder`, `consistency_checker`, `quality_validator`) are still phase-gated and intentionally not implemented in Phase 00.
 
 ---
 
