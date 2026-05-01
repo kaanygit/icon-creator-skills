@@ -3,7 +3,7 @@
 ## Phase
 
 - Phase: 01
-- Commit: pending model-default update
+- Commit: 0c195b9
 - Date: 2026-05-01
 - Reviewer: kaanygit / Codex
 - Environment: macOS, zsh, Python 3.14.4 in local `.venv`
