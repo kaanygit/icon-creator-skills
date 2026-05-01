@@ -64,7 +64,7 @@ If `package` was set, also produces an `app-icon-pack`-style asset directory and
     "seed": 42
   },
   "model": {
-    "id": "google/gemini-2.5-flash-image",
+    "id": "google/gemini-3-pro-image-preview",
     "fallback_used": false
   },
   "prompt": {
@@ -110,15 +110,15 @@ Preset-to-model mapping lives in `shared/presets/icon-styles.yaml`. Defaults:
 
 | Preset | Primary model | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `gradient` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `outline` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `neumorphic` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `material` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
+| `flat` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `outline` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `neumorphic` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `material` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
 
 ## Prompt template (sketch)
 

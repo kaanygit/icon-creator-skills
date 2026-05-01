@@ -12,7 +12,7 @@ Status values:
 
 | Model ID | Status | Intended use | Capability notes |
 |---|---|---|---|
-| `google/gemini-2.5-flash-image` | selected | Default general-purpose image model for flat, outline, material, simple mascot masters | Supports image output on OpenRouter. Use `modalities: ["image", "text"]`. |
+| `google/gemini-3-pro-image-preview` | selected | Default general-purpose image model for icons and mascot masters | Supports image input and image output on OpenRouter. Use `modalities: ["image", "text"]`. |
 | `black-forest-labs/flux.2-pro` | selected | High-quality icon styles, 3D, glass, mascot consistency, image editing/reference-heavy flows | Current Black Forest Labs image model family on OpenRouter. Evaluate for both text-to-image and editing. |
 | `black-forest-labs/flux.2-flex` | candidate | Fine-detail, typography-sensitive, and multi-reference editing tests | Promising for reference-heavy workflows; keep as candidate until Phase 02/09 tests prove value. |
 
@@ -31,15 +31,15 @@ This is the starting point for `shared/presets/icon_styles.yaml` in Phase 00/02.
 
 | Preset | Primary | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `gradient` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `outline` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
-| `neumorphic` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `material` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
-| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
+| `flat` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `outline` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `neumorphic` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `material` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
 
 ## Phase 00 YAML target
 
@@ -47,7 +47,7 @@ Phase 00 should create `shared/presets/openrouter_models.yaml` with this shape:
 
 ```yaml
 models:
-  google/gemini-2.5-flash-image:
+  google/gemini-3-pro-image-preview:
     status: selected
     provider: google
     output_modalities: [text, image]
@@ -56,7 +56,7 @@ models:
     supports_image_input: true
     supports_image_edit: true
     pricing_basis: tokens
-    notes: "Verify current pricing through OpenRouter before release."
+    notes: "Token-priced model; use response usage when available."
 
   black-forest-labs/flux.2-pro:
     status: selected

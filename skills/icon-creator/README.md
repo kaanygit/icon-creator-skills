@@ -24,7 +24,7 @@ The final line printed to stdout is the `master.png` path.
 
 - `--description`: required icon description.
 - `--output-dir`: output root directory, default `output`.
-- `--model`: OpenRouter model override, default `google/gemini-2.5-flash-image`.
+- `--model`: OpenRouter model override, default `google/gemini-3-pro-image-preview`.
 
 ## Requirements
 

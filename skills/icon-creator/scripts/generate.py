@@ -17,7 +17,7 @@ from shared.image_utils import ensure_alpha, pad_square, resize, save_png
 from shared.logging_setup import get_run_logger
 from shared.openrouter_client import OpenRouterClient
 
-DEFAULT_MODEL = "google/gemini-2.5-flash-image"
+DEFAULT_MODEL = "google/gemini-3-pro-image-preview"
 DEFAULT_FALLBACK_MODELS = ["black-forest-labs/flux.2-pro"]
 MASTER_SIZE = 1024
 

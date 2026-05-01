@@ -21,7 +21,7 @@ client = OpenRouterClient()  # reads OPENROUTER_API_KEY
 
 # text-to-image; default modalities come from shared/presets/openrouter_models.yaml
 result = client.generate(
-    model="google/gemini-2.5-flash-image",
+    model="google/gemini-3-pro-image-preview",
     prompt="...",
     negative_prompt="...",
     size=(1024, 1024),
@@ -56,7 +56,7 @@ The client must build payloads from the capability matrix instead of hardcoding 
 
 ```json
 {
-  "model": "google/gemini-2.5-flash-image",
+  "model": "google/gemini-3-pro-image-preview",
   "modalities": ["image", "text"],
   "messages": [
     {
@@ -141,7 +141,7 @@ Official references live in [docs/presets/model-matrix.md](../presets/model-matr
   ```json
   {
     "timestamp": "2026-04-29T15:31:22Z",
-    "model": "google/gemini-2.5-flash-image",
+    "model": "google/gemini-3-pro-image-preview",
     "prompt_chars": 412,
     "n": 3,
     "cost_usd": 0.0432,
@@ -164,7 +164,7 @@ models:
     supports_image_input: true
     supports_image_edit: true
     default_modalities: [image]
-  google/gemini-2.5-flash-image:
+  google/gemini-3-pro-image-preview:
     supports_text_to_image: true
     supports_image_input: true
     supports_image_edit: true

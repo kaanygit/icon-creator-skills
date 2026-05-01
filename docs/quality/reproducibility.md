@@ -24,7 +24,7 @@ Every run writes a `metadata.json` to its output directory:
   },
 
   "model": {
-    "id": "google/gemini-2.5-flash-image",
+    "id": "google/gemini-3-pro-image-preview",
     "fallback_used": false,
     "fallback_chain": ["black-forest-labs/flux.2-pro"]
   },

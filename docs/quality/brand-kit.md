@@ -32,7 +32,7 @@ A file at the project root, optional. When present, every skill run in that dire
     "default_app_name": "Acme"
   },
   "model_overrides": {
-    "icon-creator/flat": "google/gemini-2.5-flash-image",
+    "icon-creator/flat": "google/gemini-3-pro-image-preview",
     "mascot-creator/stylized/3d-toon": "black-forest-labs/flux.2-pro"
   },
   "cost": {

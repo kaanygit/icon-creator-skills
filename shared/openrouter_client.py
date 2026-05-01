@@ -106,7 +106,7 @@ class OpenRouterClient:
                     raw_response = response
                     images.extend(_parse_images(response, self.session))
 
-                cost = self._estimate_cost(candidate, n)
+                cost = self._estimate_cost(candidate, n, raw_response)
                 if cost is not None:
                     self.session_cost_usd += cost
                 self._append_cost_log(
@@ -309,12 +309,24 @@ class OpenRouterClient:
                 model_attempted=model,
             )
 
-    def _estimate_cost(self, model: str, n: int) -> float | None:
+    def _estimate_cost(self, model: str, n: int, response: dict[str, Any]) -> float | None:
         pricing = self.pricing.get(model, {})
         per_image = pricing.get("per_image_usd")
-        if per_image is None:
+        if per_image is not None:
+            return round(float(per_image) * n, 6)
+
+        usage = response.get("usage") or {}
+        input_rate = pricing.get("input_per_million_tokens_usd")
+        output_rate = pricing.get("output_per_million_tokens_usd")
+        if input_rate is None or output_rate is None or not usage:
             return None
-        return round(float(per_image) * n, 6)
+
+        input_tokens = usage.get("prompt_tokens", 0) or 0
+        output_tokens = usage.get("completion_tokens", 0) or 0
+        cost = (input_tokens / 1_000_000 * float(input_rate)) + (
+            output_tokens / 1_000_000 * float(output_rate)
+        )
+        return round(cost, 6)
 
     def _append_cost_log(
         self,

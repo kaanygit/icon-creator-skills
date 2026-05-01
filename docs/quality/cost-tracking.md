@@ -52,8 +52,8 @@ Generation complete.
 `~/.icon-skills/cost-log.json` accumulates one entry per call (append-only):
 
 ```json
-{"timestamp": "2026-04-29T15:31:22Z", "skill": "icon-creator", "model": "google/gemini-2.5-flash-image", "n": 3, "cost_usd": 0.0432, "run_id": "..."}
-{"timestamp": "2026-04-29T15:32:01Z", "skill": "icon-creator", "model": "google/gemini-2.5-flash-image", "n": 1, "cost_usd": 0.0144, "run_id": "..."}
+{"timestamp": "2026-04-29T15:31:22Z", "skill": "icon-creator", "model": "google/gemini-3-pro-image-preview", "n": 3, "cost_usd": 0.0432, "run_id": "..."}
+{"timestamp": "2026-04-29T15:32:01Z", "skill": "icon-creator", "model": "google/gemini-3-pro-image-preview", "n": 1, "cost_usd": 0.0144, "run_id": "..."}
 ```
 
 Disable with `~/.icon-skills/config.yaml` setting:
@@ -78,14 +78,14 @@ By skill:
   ...
 
 By model:
-  google/gemini-2.5-flash-image    $14.20  (612 calls)
+  google/gemini-3-pro-image-preview    $14.20  (612 calls)
   black-forest-labs/flux.2-pro     $19.92  (186 calls)
 ```
 
 ```
 $ icon-skills cost recent
 Last 10 calls:
-  2026-04-29 15:32  icon-creator       gemini-2.5-flash-image    $0.014
+  2026-04-29 15:32  icon-creator       gemini-3-pro-image-preview    $0.014
   ...
 ```
 
@@ -94,9 +94,10 @@ Last 10 calls:
 `shared/presets/openrouter_pricing.yaml` is reviewed quarterly. Format:
 
 ```yaml
-google/gemini-2.5-flash-image:
-  per_image_usd: 0.0144
-  notes: "Pricing as of 2026-04, OpenRouter listed rate"
+google/gemini-3-pro-image-preview:
+  input_per_million_tokens_usd: 2.00
+  output_per_million_tokens_usd: 12.00
+  notes: "Pricing as of 2026-05, OpenRouter listed rate"
 black-forest-labs/flux.2-pro:
   per_image_usd: 0.04
   notes: "..."

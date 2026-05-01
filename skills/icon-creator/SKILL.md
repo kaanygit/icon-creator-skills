@@ -18,7 +18,7 @@ python skills/icon-creator/scripts/generate.py --description "<user's descriptio
 Optional arguments:
 
 - `--output-dir <path>`: output root, default `output`
-- `--model <openrouter-model-id>`: model override, default `google/gemini-2.5-flash-image`
+- `--model <openrouter-model-id>`: model override, default `google/gemini-3-pro-image-preview`
 
 The script prints the path to the generated `master.png` on the last line of stdout.
 

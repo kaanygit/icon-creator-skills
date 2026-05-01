@@ -18,7 +18,7 @@ SCRIPT_PATH = Path(__file__).parents[1] / "scripts" / "generate.py"
 class FakeResult:
     images: list[Image.Image]
     cost_usd: float | None = 0.0144
-    model_used: str = "google/gemini-2.5-flash-image"
+    model_used: str = "google/gemini-3-pro-image-preview"
     fallback_used: bool = False
 
 
@@ -67,7 +67,7 @@ def test_generate_icon_writes_master_and_metadata(tmp_path: Path, generate_modul
     assert metadata["outputs"]["master"] == str(run.master_path)
     assert "centered, transparent background" in metadata["prompt"]["positive"]
 
-    assert client.calls[0]["model"] == "google/gemini-2.5-flash-image"
+    assert client.calls[0]["model"] == "google/gemini-3-pro-image-preview"
     assert client.calls[0]["n"] == 1
     assert client.calls[0]["size"] == (1024, 1024)
 
