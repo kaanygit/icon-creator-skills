@@ -114,7 +114,17 @@ def load_config(
 def validate_iconrc(data: dict[str, Any]) -> None:
     """Validate the supported subset of `.iconrc.json` without extra dependencies."""
 
-    allowed_top = {"brand", "defaults", "openrouter", "cost", "image", "logging"}
+    allowed_top = {
+        "brand",
+        "defaults",
+        "openrouter",
+        "openai",
+        "google",
+        "image_generation",
+        "cost",
+        "image",
+        "logging",
+    }
     unknown = sorted(set(data) - allowed_top)
     if unknown:
         raise InputError(f"Unsupported .iconrc.json section(s): {', '.join(unknown)}")

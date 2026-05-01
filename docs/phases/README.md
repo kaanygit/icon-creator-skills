@@ -21,6 +21,7 @@ Phases are ordered to deliver **the most value as early as possible**:
 7. **Phase 12** mascot-pack
 8. **Phase 13** icon-set-creator (relatively easier given prior work)
 9. **Phases 14-17** cross-cutting polish, docs, release
+10. **Phase 18** adds post-v1 multi-provider image backends and configurable model defaults
 
 ## Phase index
 
@@ -45,6 +46,7 @@ Phases are ordered to deliver **the most value as early as possible**:
 | **15** | polish | — | Error handling, retry tuning, cost UX | [phase-15-polish.md](phase-15-polish.md) |
 | **16** | docs | — | README, examples, install, troubleshooting | [phase-16-docs.md](phase-16-docs.md) |
 | **17** | release | — | GitHub publish, version 1.0.0 | [phase-17-release.md](phase-17-release.md) |
+| **18** | shared/ + generation skills | — | OpenRouter/OpenAI/Google provider selection | [phase-18-acceptance.md](phase-18-acceptance.md) |
 
 ## Acceptance test discipline
 

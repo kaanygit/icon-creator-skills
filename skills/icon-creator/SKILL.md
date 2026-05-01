@@ -18,7 +18,8 @@ python skills/icon-creator/scripts/generate.py --description "<user's descriptio
 Optional arguments:
 
 - `--output-dir <path>`: output root, default `output`
-- `--model <openrouter-model-id>`: model override, default `sourceful/riverflow-v2-fast-preview`
+- `--provider <provider>`: image provider override, one of `openrouter`, `openai`, or `google`
+- `--model <model-id>`: provider model override; if omitted, use config, then the preset default
 - `--style-preset <preset>`: one of `flat`, `gradient`, `glass-morphism`, `outline`, `3d-isometric`, `skeuomorphic`, `neumorphic`, `material`, `ios-style`
 - `--colors <hex,hex>`: comma-separated palette to steer the output
 - `--reference-image <path>`: PNG/JPG reference used for palette and style hints

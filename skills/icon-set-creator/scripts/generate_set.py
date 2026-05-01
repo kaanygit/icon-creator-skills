@@ -17,8 +17,15 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR.parent.parent.parent) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR.parent.parent.parent))
 
+from shared.config import load_config  # noqa: E402
 from shared.consistency_checker import ConsistencyChecker, ConsistencyScore  # noqa: E402
 from shared.errors import InputError  # noqa: E402
+from shared.image_clients import (  # noqa: E402
+    create_image_client,
+    fallback_models_for_provider,
+    resolve_model_for_provider,
+    resolve_provider,
+)
 from shared.image_utils import (  # noqa: E402
     compose_grid,
     ensure_alpha,
@@ -28,7 +35,6 @@ from shared.image_utils import (  # noqa: E402
     save_png,
 )
 from shared.logging_setup import get_run_logger  # noqa: E402
-from shared.openrouter_client import OpenRouterClient  # noqa: E402
 from shared.prompt_builder import PromptBuilder  # noqa: E402
 from shared.quality_validator import QualityValidator  # noqa: E402
 from shared.style_memory import load_style  # noqa: E402
@@ -82,6 +88,7 @@ def generate_icon_set(
     set_name: str | None = None,
     stroke_width: str | None = None,
     corner_radius: str | None = None,
+    provider: str | None = None,
     model: str | None = None,
     output_dir: str | Path = "output",
     seed_base: int | None = None,
@@ -102,16 +109,18 @@ def generate_icon_set(
     if style and not reference_icon:
         reference_icon = load_style(style).path / "style-anchor.png"
 
+    config = load_config()
+    selected_provider = resolve_provider(provider, config=config)
     builder = prompt_builder or PromptBuilder()
     analyzer = vision_analyzer or VisionAnalyzer()
     validator = quality_validator or QualityValidator()
     checker = consistency_checker or ConsistencyChecker()
-    image_client = client or OpenRouterClient()
+    image_client = client or create_image_client(selected_provider, config=config)
     timestamp = timestamp or datetime.now(UTC)
     name = set_name or f"{subjects[0]} icon set"
     run_dir = Path(output_dir) / f"{slugify(name)}-{timestamp.strftime('%Y%m%d-%H%M%S')}"
     run_dir.mkdir(parents=True, exist_ok=True)
-    logger = get_run_logger(run_dir, "openrouter")
+    logger = get_run_logger(run_dir, selected_provider)
     icons_dir = run_dir / "icons"
     icons_dir.mkdir(parents=True, exist_ok=True)
 
@@ -131,9 +140,21 @@ def generate_icon_set(
             stroke_width=stroke_width,
             corner_radius=corner_radius,
         )
+        selected_model = resolve_model_for_provider(
+            provider=selected_provider,
+            requested_model=model,
+            prompt_model=anchor_prompt.model_recommendation,
+            config=config,
+        )
+        selected_fallback_models = fallback_models_for_provider(
+            provider=selected_provider,
+            requested_model=model,
+            prompt_fallbacks=anchor_prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+            config=config,
+        )
         result = image_client.generate(
-            model=anchor_prompt.model_recommendation,
-            fallback_models=anchor_prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+            model=selected_model,
+            fallback_models=selected_fallback_models,
             prompt=anchor_prompt.positive,
             negative_prompt=anchor_prompt.negative,
             n=min(3, best_of_n),
@@ -168,6 +189,7 @@ def generate_icon_set(
             subject=subject,
             style_preset=style_preset,
             colors=colors,
+            provider=selected_provider,
             model=model,
             stroke_width=stroke_width,
             corner_radius=corner_radius,
@@ -182,6 +204,7 @@ def generate_icon_set(
             checker=checker,
             logger=logger,
             total_cost=total_cost,
+            config=config,
         )
         records.append(record)
 
@@ -210,6 +233,8 @@ def generate_icon_set(
         total_cost=total_cost,
         reference_icon=reference_icon,
         style=style,
+        provider=selected_provider,
+        model=model,
     )
     return IconSetRun(
         run_dir=run_dir,
@@ -225,6 +250,7 @@ def _generate_member(
     subject: str,
     style_preset: str,
     colors: list[str] | None,
+    provider: str,
     model: str | None,
     stroke_width: str | None,
     corner_radius: str | None,
@@ -239,6 +265,7 @@ def _generate_member(
     checker: ConsistencyChecker,
     logger: Any,
     total_cost: float | None,
+    config: dict[str, Any],
 ) -> tuple[IconRecord, float | None]:
     prompt = _build_icon_prompt(
         builder=builder,
@@ -250,14 +277,26 @@ def _generate_member(
         stroke_width=stroke_width,
         corner_radius=corner_radius,
     )
+    selected_model = resolve_model_for_provider(
+        provider=provider,
+        requested_model=model,
+        prompt_model=prompt.model_recommendation,
+        config=config,
+    )
+    selected_fallback_models = fallback_models_for_provider(
+        provider=provider,
+        requested_model=model,
+        prompt_fallbacks=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        config=config,
+    )
     best_image: Image.Image | None = None
     best_score: ConsistencyScore | None = None
     attempts = 0
     for attempt in range(best_of_n):
         attempts += 1
         result = client.generate(
-            model=prompt.model_recommendation,
-            fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+            model=selected_model,
+            fallback_models=selected_fallback_models,
             prompt=prompt.positive,
             negative_prompt=prompt.negative,
             n=1,
@@ -394,6 +433,8 @@ def _write_metadata(
     total_cost: float | None,
     reference_icon: str | Path | None,
     style: str | None,
+    provider: str,
+    model: str | None,
 ) -> Path:
     data = {
         "skill": "icon-set-creator",
@@ -403,6 +444,8 @@ def _write_metadata(
         "anchor_subject": anchor_subject,
         "reference_icon": str(reference_icon) if reference_icon else None,
         "style": style,
+        "provider": provider,
+        "model": model,
         "style_preset": style_preset,
         "colors": colors,
         "style_guide": style_guide.to_dict(),
@@ -456,7 +499,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--set-name", default=None, help="Output set name")
     parser.add_argument("--stroke-width", default=None, help="thin|regular|bold")
     parser.add_argument("--corner-radius", default=None, help="sharp|rounded|pill")
-    parser.add_argument("--model", default=None, help="OpenRouter model override")
+    parser.add_argument(
+        "--provider",
+        default=None,
+        help="Image provider override: openrouter, openai, or google",
+    )
+    parser.add_argument("--model", default=None, help="Provider model override")
     parser.add_argument("--output-dir", default="output", help="Output root")
     parser.add_argument("--seed-base", type=int, default=None, help="Base seed")
     parser.add_argument("--best-of-n", type=int, default=3, help="Attempts per member")
@@ -475,6 +523,7 @@ def main() -> int:
         set_name=args.set_name,
         stroke_width=args.stroke_width,
         corner_radius=args.corner_radius,
+        provider=args.provider,
         model=args.model,
         output_dir=args.output_dir,
         seed_base=args.seed_base,

@@ -13,11 +13,17 @@ from typing import Any, Protocol
 import yaml
 from PIL import Image
 
+from shared.config import load_config
 from shared.consistency_checker import ConsistencyChecker, ConsistencyScore
 from shared.errors import InputError
+from shared.image_clients import (
+    create_image_client,
+    fallback_models_for_provider,
+    resolve_model_for_provider,
+    resolve_provider,
+)
 from shared.image_utils import compose_grid, ensure_alpha, pad_square, resize, save_png
 from shared.logging_setup import get_run_logger
-from shared.openrouter_client import OpenRouterClient
 from shared.prompt_builder import PromptBuilder
 from shared.quality_validator import QualityValidator
 from shared.style_memory import load_style
@@ -76,6 +82,7 @@ def generate_mascot(
     preset: str | None = None,
     personality: str | None = None,
     output_dir: str | Path = "output",
+    provider: str | None = None,
     model: str | None = None,
     variants: int = 3,
     seed: int | None = None,
@@ -124,16 +131,18 @@ def generate_mascot(
     if style and not reference_image:
         reference_image = load_style(style).path / "style-anchor.png"
 
+    config = load_config()
+    selected_provider = resolve_provider(provider, config=config)
     builder = prompt_builder or PromptBuilder()
     analyzer = vision_analyzer or VisionAnalyzer()
     validator = quality_validator or QualityValidator()
     checker = consistency_checker or ConsistencyChecker()
-    image_client = client or OpenRouterClient()
+    image_client = client or create_image_client(selected_provider, config=config)
     timestamp = timestamp or datetime.now(UTC)
     run_id = f"{slugify(mascot_name or description)}-{timestamp.strftime('%Y%m%d-%H%M%S')}"
     run_dir = Path(output_dir) / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
-    logger = get_run_logger(run_dir, "openrouter")
+    logger = get_run_logger(run_dir, selected_provider)
 
     master_prompt = builder.build(
         skill="mascot-creator",
@@ -143,9 +152,21 @@ def generate_mascot(
         personality=personality,
         model_override=model,
     )
+    selected_model = resolve_model_for_provider(
+        provider=selected_provider,
+        requested_model=model,
+        prompt_model=master_prompt.model_recommendation,
+        config=config,
+    )
+    selected_fallback_models = fallback_models_for_provider(
+        provider=selected_provider,
+        requested_model=model,
+        prompt_fallbacks=master_prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        config=config,
+    )
     result = image_client.generate(
-        model=master_prompt.model_recommendation,
-        fallback_models=master_prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        model=selected_model,
+        fallback_models=selected_fallback_models,
         prompt=master_prompt.positive,
         negative_prompt=master_prompt.negative,
         n=variants,
@@ -185,6 +206,7 @@ def generate_mascot(
         preset=preset,
         preset_config=preset_config,
         personality=personality,
+        provider=selected_provider,
         model=model,
         seed=seed,
         threshold=0.80,
@@ -197,6 +219,7 @@ def generate_mascot(
         checker=checker,
         logger=logger,
         total_cost=total_cost,
+        config=config,
     )
     variant_records.extend(new_records)
     new_records, total_cost = _generate_named_variants(
@@ -209,6 +232,7 @@ def generate_mascot(
         preset=preset,
         preset_config=preset_config,
         personality=personality,
+        provider=selected_provider,
         model=model,
         seed=seed,
         threshold=consistency_threshold,
@@ -221,6 +245,7 @@ def generate_mascot(
         checker=checker,
         logger=logger,
         total_cost=total_cost,
+        config=config,
     )
     variant_records.extend(new_records)
     new_records, total_cost = _generate_named_variants(
@@ -233,6 +258,7 @@ def generate_mascot(
         preset=preset,
         preset_config=preset_config,
         personality=personality,
+        provider=selected_provider,
         model=model,
         seed=seed,
         threshold=consistency_threshold,
@@ -245,6 +271,7 @@ def generate_mascot(
         checker=checker,
         logger=logger,
         total_cost=total_cost,
+        config=config,
     )
     variant_records.extend(new_records)
     new_records, total_cost = _generate_named_variants(
@@ -257,6 +284,7 @@ def generate_mascot(
         preset=preset,
         preset_config=preset_config,
         personality=personality,
+        provider=selected_provider,
         model=model,
         seed=seed,
         threshold=consistency_threshold,
@@ -269,6 +297,7 @@ def generate_mascot(
         checker=checker,
         logger=logger,
         total_cost=total_cost,
+        config=config,
     )
     variant_records.extend(new_records)
     if matrix:
@@ -280,6 +309,7 @@ def generate_mascot(
             preset=preset,
             preset_config=preset_config,
             personality=personality,
+            provider=selected_provider,
             model=model,
             seed=seed,
             threshold=consistency_threshold,
@@ -292,6 +322,7 @@ def generate_mascot(
             checker=checker,
             logger=logger,
             total_cost=total_cost,
+            config=config,
         )
         variant_records.extend(matrix_records)
 
@@ -330,6 +361,7 @@ def generate_mascot(
             "type": mascot_type,
             "preset": preset,
             "personality": personality,
+            "provider": selected_provider,
             "model": model,
             "variants": variants,
             "seed": seed,
@@ -344,9 +376,10 @@ def generate_mascot(
             "style": style,
         },
         "model": {
-            "id": getattr(result, "model_used", master_prompt.model_recommendation),
+            "id": getattr(result, "model_used", selected_model),
             "fallback_used": bool(getattr(result, "fallback_used", False)),
-            "requested": master_prompt.model_recommendation,
+            "requested": selected_model,
+            "prompt_recommendation": master_prompt.model_recommendation,
         },
         "prompt": {
             "positive": master_prompt.positive,
@@ -392,6 +425,7 @@ def _generate_named_variants(
     preset: str,
     preset_config: dict[str, Any],
     personality: str | None,
+    provider: str,
     model: str | None,
     seed: int | None,
     threshold: float,
@@ -404,6 +438,7 @@ def _generate_named_variants(
     checker: ConsistencyChecker,
     logger: Any,
     total_cost: float | None,
+    config: dict[str, Any],
 ) -> tuple[list[VariantRecord], float | None]:
     records: list[VariantRecord] = []
     if not names:
@@ -423,14 +458,26 @@ def _generate_named_variants(
             anchor_text=anchor_traits.anchor_text,
             **{prompt_variable: name},
         )
+        selected_model = resolve_model_for_provider(
+            provider=provider,
+            requested_model=model,
+            prompt_model=prompt.model_recommendation,
+            config=config,
+        )
+        selected_fallback_models = fallback_models_for_provider(
+            provider=provider,
+            requested_model=model,
+            prompt_fallbacks=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+            config=config,
+        )
         best_image: Image.Image | None = None
         best_score: ConsistencyScore | None = None
         attempts = 0
         for attempt in range(best_of_n):
             attempts += 1
             result = client.generate(
-                model=prompt.model_recommendation,
-                fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+                model=selected_model,
+                fallback_models=selected_fallback_models,
                 prompt=prompt.positive,
                 negative_prompt=prompt.negative,
                 n=1,
@@ -475,6 +522,7 @@ def _generate_matrix_variants(
     preset: str,
     preset_config: dict[str, Any],
     personality: str | None,
+    provider: str,
     model: str | None,
     seed: int | None,
     threshold: float,
@@ -487,6 +535,7 @@ def _generate_matrix_variants(
     checker: ConsistencyChecker,
     logger: Any,
     total_cost: float | None,
+    config: dict[str, Any],
 ) -> tuple[list[VariantRecord], float | None]:
     records: list[VariantRecord] = []
     output_dir = run_dir / "pose-expression-matrix"
@@ -506,14 +555,26 @@ def _generate_matrix_variants(
                 pose=pose,
                 expression=expression,
             )
+            selected_model = resolve_model_for_provider(
+                provider=provider,
+                requested_model=model,
+                prompt_model=prompt.model_recommendation,
+                config=config,
+            )
+            selected_fallback_models = fallback_models_for_provider(
+                provider=provider,
+                requested_model=model,
+                prompt_fallbacks=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+                config=config,
+            )
             best_image: Image.Image | None = None
             best_score: ConsistencyScore | None = None
             attempts = 0
             for attempt in range(best_of_n):
                 attempts += 1
                 result = client.generate(
-                    model=prompt.model_recommendation,
-                    fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+                    model=selected_model,
+                    fallback_models=selected_fallback_models,
                     prompt=prompt.positive,
                     negative_prompt=prompt.negative,
                     n=1,
@@ -683,7 +744,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--preset", default=None, help="Mascot preset")
     parser.add_argument("--personality", default=None, help="Optional personality descriptor")
     parser.add_argument("--output-dir", default="output", help="Output root directory")
-    parser.add_argument("--model", default=None, help="OpenRouter model id override")
+    parser.add_argument(
+        "--provider",
+        default=None,
+        help="Image provider override: openrouter, openai, or google",
+    )
+    parser.add_argument("--model", default=None, help="Provider model override")
     parser.add_argument("--variants", type=int, default=3, help="Master variants, 1-6")
     parser.add_argument("--seed", type=int, default=None, help="Optional seed")
     parser.add_argument("--views", default=None, help="Comma-separated views")
@@ -707,6 +773,7 @@ def main() -> int:
         preset=args.preset,
         personality=args.personality,
         output_dir=args.output_dir,
+        provider=args.provider,
         model=args.model,
         variants=args.variants,
         seed=args.seed,

@@ -177,9 +177,15 @@ python skills/icon-creator/scripts/generate.py \
   --seed 42
 ```
 
-## OpenRouter API key setup
+## Image provider setup
 
 Use one of these local-only options. Never commit an API key to this repo.
+
+Generation skills support three image providers:
+
+- `openrouter` (default): OpenRouter-compatible image models.
+- `openai`: OpenAI Images API.
+- `google`: Gemini image generation API.
 
 ### Option A: shell config
 
@@ -187,6 +193,8 @@ Add this to your shell config, for example `~/.zshrc`:
 
 ```bash
 export OPENROUTER_API_KEY="sk-or-v1-your-key"
+export OPENAI_API_KEY="sk-your-openai-key"
+export GEMINI_API_KEY="your-google-gemini-key"
 ```
 
 Then restart your terminal or run:
@@ -197,28 +205,64 @@ source ~/.zshrc
 
 This works when the agent or skill process inherits your shell environment.
 
-### Option B: user-global key file
+### Option B: user-global key files
 
 This is safer for OpenCode or GUI-launched agents that may not load `~/.zshrc`.
 
 ```bash
 mkdir -p ~/.icon-skills
 printf '%s\n' 'sk-or-v1-your-key' > ~/.icon-skills/openrouter.key
+printf '%s\n' 'sk-your-openai-key' > ~/.icon-skills/openai.key
+printf '%s\n' 'your-google-gemini-key' > ~/.icon-skills/google.key
 chmod 600 ~/.icon-skills/openrouter.key
+chmod 600 ~/.icon-skills/openai.key
+chmod 600 ~/.icon-skills/google.key
 ```
 
 Create or edit `~/.icon-skills/config.yaml`:
 
 ```yaml
+image_generation:
+  provider: openrouter
+
 openrouter:
   api_key_file: ~/.icon-skills/openrouter.key
+  model: sourceful/riverflow-v2-fast-preview
+
+openai:
+  api_key_file: ~/.icon-skills/openai.key
+  model: gpt-image-1
+
+google:
+  api_key_file: ~/.icon-skills/google.key
+  model: gemini-2.5-flash-image
 ```
 
 When a generation skill runs, it checks keys in this order:
 
 1. Explicit key passed by code
-2. `OPENROUTER_API_KEY`
-3. `openrouter.api_key_file` from `~/.icon-skills/config.yaml`
+2. Provider environment variable: `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, or `GOOGLE_API_KEY`
+3. Provider `api_key_file` from `~/.icon-skills/config.yaml`
+
+Provider and model selection work the same way:
+
+```bash
+python skills/icon-creator/scripts/generate.py \
+  --description "minimal geometric fox" \
+  --provider openrouter \
+  --model google/gemini-2.5-flash-image
+
+python skills/mascot-creator/scripts/generate.py \
+  --description "friendly fox guide" \
+  --type stylized \
+  --preset cartoon-2d \
+  --provider google \
+  --model gemini-2.5-flash-image
+```
+
+If `--provider` is omitted, the skill uses `image_generation.provider`. If `--model`
+is omitted, the skill uses the provider model in config, then falls back to the preset
+recommendation for OpenRouter or the built-in default for OpenAI/Google.
 
 The key value is not written to `metadata.json`, logs, prompts, or generated outputs.
 
@@ -306,7 +350,7 @@ python skills/png-to-svg/scripts/vectorize.py \
   --algorithm auto
 ```
 
-No OpenRouter call is made for app-icon packaging or SVG vectorization.
+No image-provider API call is made for app-icon packaging or SVG vectorization.
 
 Generate a mascot package:
 

@@ -23,6 +23,18 @@
       "type": "object",
       "additionalProperties": true
     },
+    "openai": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "google": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "image_generation": {
+      "type": "object",
+      "additionalProperties": true
+    },
     "cost": {
       "type": "object",
       "additionalProperties": true

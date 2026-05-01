@@ -145,6 +145,51 @@ def test_reference_image_adds_hints(tmp_path: Path, generate_module: Any) -> Non
     assert "reference" in metadata["prompt"]["positive"]
 
 
+def test_provider_model_defaults_can_be_selected(tmp_path: Path, generate_module: Any) -> None:
+    client = FakeClient()
+
+    run = generate_module.generate_icon(
+        description="rocket",
+        output_dir=tmp_path,
+        provider="openai",
+        variants=1,
+        client=client,
+        timestamp=datetime(2026, 5, 1, 0, 0, 0, tzinfo=UTC),
+    )
+
+    metadata = json.loads(run.metadata_path.read_text(encoding="utf-8"))
+    assert client.calls[0]["model"] == "gpt-image-1"
+    assert client.calls[0]["fallback_models"] == []
+    assert metadata["inputs"]["provider"] == "openai"
+    assert metadata["model"]["requested"] == "gpt-image-1"
+
+
+def test_openrouter_model_can_come_from_config(
+    tmp_path: Path,
+    generate_module: Any,
+    monkeypatch,
+) -> None:
+    client = FakeClient()
+    monkeypatch.setattr(
+        generate_module,
+        "load_config",
+        lambda: {
+            "image_generation": {"provider": "openrouter"},
+            "openrouter": {"model": "google/gemini-2.5-flash-image"},
+        },
+    )
+
+    generate_module.generate_icon(
+        description="rocket",
+        output_dir=tmp_path,
+        variants=1,
+        client=client,
+        timestamp=datetime(2026, 5, 1, 0, 0, 0, tzinfo=UTC),
+    )
+
+    assert client.calls[0]["model"] == "google/gemini-2.5-flash-image"
+
+
 def test_refine_sets_reference_image_and_metadata(tmp_path: Path, generate_module: Any) -> None:
     previous_dir = tmp_path / "previous"
     previous_dir.mkdir()

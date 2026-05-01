@@ -6,7 +6,7 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## What this project is
 
-`icon-creator-skills` — an open-source agent-skill toolkit for icon and mascot generation, with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any harness that supports the SKILL.md format.
+`icon-creator-skills` — an open-source agent-skill toolkit for icon and mascot generation, with multi-platform asset packaging. Built for OpenRouter, OpenAI, and Google Gemini image models, designed to drop into Claude Code, OpenCode, and any harness that supports the SKILL.md format.
 
 **License:** MIT.
 **Language:** Python 3.11+.
@@ -40,7 +40,7 @@ icon-creator-skills/
 - **6 skills** (icon-creator, icon-set-creator, mascot-creator, png-to-svg, app-icon-pack, mascot-pack). Mascot ≠ icon, set ≠ single, packaging ≠ generation.
 - **Monorepo** with shared `shared/` package across all skills.
 - **Python**, not Node.js. Pillow + OpenCV + rembg + vtracer ecosystem.
-- **OpenRouter-only** image generation in v1. No Replicate / fal.ai / direct provider abstraction.
+- **Image providers:** OpenRouter is the default; OpenAI and Google Gemini are available via `--provider` or `~/.icon-skills/config.yaml`.
 - **MIT license.**
 - **No telemetry, ever.**
 - **Phased build with explicit acceptance tests.** Each phase has a manual checkpoint in OpenCode before moving on.
@@ -113,7 +113,7 @@ Look at `docs/phases/README.md`. The phase that's not yet "done" is the next one
 - **Errors:** subclass `IconSkillsError`, see `shared/errors.py` (after phase 0).
 - **Configuration:** YAML in `shared/presets/`, never hardcoded in Python.
 - **Prompts:** Jinja templates in `shared/presets/prompt_templates/`, never hardcoded.
-- **API key:** read from explicit code injection, `OPENROUTER_API_KEY`, or `openrouter.api_key_file` in `~/.icon-skills/config.yaml`. Never log it. Never write it to any output file.
+- **API keys:** read from explicit code injection, provider environment variables, or provider `api_key_file` values in `~/.icon-skills/config.yaml`. Never log keys. Never write them to any output file.
 
 ## Phase plan (TL;DR)
 

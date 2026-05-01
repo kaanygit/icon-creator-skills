@@ -6,6 +6,22 @@ openrouter:
   app_name: icon-creator-skills
   http_referer: https://github.com/kaanygit/icon-creator-skills
 
+openai:
+  base_url: https://api.openai.com/v1
+  api_key_file:
+  model: gpt-image-1
+
+google:
+  base_url: https://generativelanguage.googleapis.com/v1beta
+  api_key_file:
+  model: gemini-2.5-flash-image
+
+image_generation:
+  provider: openrouter
+  models:
+    openai: gpt-image-1
+    google: gemini-2.5-flash-image
+
 image:
   default_master_size: 1024
   default_pad_color: [0, 0, 0, 0]

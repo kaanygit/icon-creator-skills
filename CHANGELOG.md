@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added Phase 18 multi-provider image generation backends for OpenRouter, OpenAI, and Google Gemini.
+- Added `--provider` support to generation CLIs and provider/model defaults in `~/.icon-skills/config.yaml`.
+- Added offline provider tests for OpenAI, Google Gemini, and model-resolution behavior.
+
 ## 1.0.0 - 2026-05-01
 
 - Added `icon-creator` v0.3.

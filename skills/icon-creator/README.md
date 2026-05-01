@@ -32,7 +32,8 @@ The final line printed to stdout is the auto-picked `master.png` path.
 
 - `--description`: required icon description.
 - `--output-dir`: output root directory, default `output`.
-- `--model`: OpenRouter model override, default `sourceful/riverflow-v2-fast-preview`.
+- `--provider`: image provider override: `openrouter`, `openai`, or `google`.
+- `--model`: provider model override. If omitted, uses `~/.icon-skills/config.yaml`, then the preset default.
 - `--style-preset`: `flat`, `gradient`, `glass-morphism`, `outline`, `3d-isometric`, `skeuomorphic`, `neumorphic`, `material`, or `ios-style`.
 - `--colors`: comma-separated palette, e.g. `#FF6600,#111111`.
 - `--reference-image`: PNG/JPG style reference. The skill extracts palette and style hints locally.
@@ -67,10 +68,23 @@ python skills/icon-creator/scripts/generate.py \
 
 ## Requirements
 
-Set `OPENROUTER_API_KEY` before running live generation:
+Set a provider API key before running live generation:
 
 ```bash
 export OPENROUTER_API_KEY="..."
+# or
+export OPENAI_API_KEY="..."
+# or
+export GEMINI_API_KEY="..."
 ```
 
-Phase 03 does not support packaging or SVG output. Those land in later phases.
+You can also set provider defaults in `~/.icon-skills/config.yaml`:
+
+```yaml
+image_generation:
+  provider: openrouter
+
+openrouter:
+  api_key_file: ~/.icon-skills/openrouter.key
+  model: google/gemini-2.5-flash-image
+```

@@ -6,14 +6,19 @@
 icon-skills doctor
 ```
 
-## OpenRouter API key missing
+## Provider API key missing
 
-Use either `OPENROUTER_API_KEY` or `openrouter.api_key_file` in `~/.icon-skills/config.yaml`.
+Use the provider environment variable or a provider key file in `~/.icon-skills/config.yaml`:
+
+- OpenRouter: `OPENROUTER_API_KEY` or `openrouter.api_key_file`
+- OpenAI: `OPENAI_API_KEY` or `openai.api_key_file`
+- Google Gemini: `GEMINI_API_KEY`, `GOOGLE_API_KEY`, or `google.api_key_file`
 The key itself should never be committed to this repo.
 
 ## Model not found
 
-Pass `--model` with a known OpenRouter image model or update `shared/presets/openrouter_models.yaml`.
+Pass `--provider` and `--model` with a known image model for that provider. For OpenRouter,
+you can also set `openrouter.model` in `~/.icon-skills/config.yaml`.
 
 ## Vectorization quality is poor
 

@@ -6,7 +6,7 @@ Pure-Python primitives used by every skill. No skill UX, no prompt content, no d
 
 | Module | Owns | Used by |
 |---|---|---|
-| [openrouter-client.md](openrouter-client.md) | OpenRouter API calls, retry, cost tracking, fallbacks | every skill that generates images |
+| [openrouter-client.md](openrouter-client.md) | OpenRouter API calls, retry, cost tracking, fallbacks | OpenRouter-backed generation |
 | [vision-analyzer.md](vision-analyzer.md) | Reference-image analysis, style extraction, brand-similarity warnings | icon-creator, icon-set-creator, mascot-creator |
 | [prompt-builder.md](prompt-builder.md) | Template engine, preset injection, negative-prompt assembly | every generation skill |
 | [image-utils.md](image-utils.md) | Resize, crop, padding, bg removal, format conversion, alpha cleanup | every skill |
@@ -17,7 +17,7 @@ Pure-Python primitives used by every skill. No skill UX, no prompt content, no d
 
 1. **No skill imports another skill.** All shared logic lives here. Skills import from `shared/`; never from `skills/<other-skill>/`.
 2. **Fail loudly on missing native deps.** Each module's optional native dependencies (potrace, vtracer, rembg) are guarded; missing deps produce actionable errors with install commands, never silent fallbacks.
-3. **Pure functions over stateful classes.** Most APIs take inputs and return outputs. Stateful classes only where genuinely needed (e.g. `OpenRouterClient` to hold session + cost log).
+3. **Pure functions over stateful classes.** Most APIs take inputs and return outputs. Stateful classes only where genuinely needed (e.g. provider clients to hold session + cost log).
 4. **Configuration in YAML, not Python.** Style presets, model mappings, platform size tables — all YAML in `shared/presets/`. Python loads them; doesn't define them.
 5. **Logging is structured.** Every shared module emits structured logs (JSON line format) under `logs/{module}.log`. Skills aggregate these into the run directory.
 
@@ -48,8 +48,8 @@ cfg = load_config()
 #   4. per-call args (passed in by skill)
 ```
 
-OpenRouter auth is read in priority order: explicit code injection, `OPENROUTER_API_KEY`, then `openrouter.api_key_file` in `~/.icon-skills/config.yaml`. The merged config may contain only a path to a local key file, not the key value itself. Keys are never logged or written to run metadata.
+Provider auth is read in priority order: explicit code injection, provider environment variables, then provider `api_key_file` values in `~/.icon-skills/config.yaml`. The merged config may contain only paths to local key files, not key values. Keys are never logged or written to run metadata.
 
 ## Cross-cutting: testing
 
-Each module ships a `tests/` directory with unit tests. The shared layer has zero external API calls in tests; OpenRouter calls are mocked. Skill-level integration tests in `skills/<skill>/tests/` may make real API calls, gated behind a `RUN_LIVE_TESTS=1` env var.
+Each module ships a `tests/` directory with unit tests. The shared layer has zero external API calls in tests; provider calls are mocked. Skill-level integration tests in `skills/<skill>/tests/` may make real API calls, gated behind a `RUN_LIVE_TESTS=1` env var.

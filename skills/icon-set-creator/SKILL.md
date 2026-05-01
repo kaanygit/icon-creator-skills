@@ -16,7 +16,7 @@ Use this skill when the user wants multiple icons that must look like one family
   --colors "#2563EB,#1E40AF"
 ```
 
-This skill uses OpenRouter unless `--reference-icon` and a fake/test client are used by code. For larger sets, warn the user about call count before running.
+This skill uses the configured image provider, defaulting to OpenRouter. Use `--provider openrouter|openai|google` and `--model <model-id>` to override one run. For larger sets, warn the user about call count before running.
 
 ## Output
 

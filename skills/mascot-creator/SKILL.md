@@ -30,6 +30,7 @@ Use this skill when the user wants a mascot, character, brand character, mascot 
 ```
 
 Use `--variants 1` for cheap smoke tests. Use `--best-of-n 1` when the user explicitly wants to limit OpenRouter calls.
+Use `--provider openrouter|openai|google` and `--model <model-id>` to override the configured provider/model for one run.
 
 ## Output
 

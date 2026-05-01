@@ -12,10 +12,16 @@ from typing import Any, Protocol
 
 from PIL import Image
 
+from shared.config import load_config
 from shared.errors import InputError
+from shared.image_clients import (
+    create_image_client,
+    fallback_models_for_provider,
+    resolve_model_for_provider,
+    resolve_provider,
+)
 from shared.image_utils import ensure_alpha, pad_square, resize, save_png
 from shared.logging_setup import get_run_logger
-from shared.openrouter_client import OpenRouterClient
 from shared.prompt_builder import PromptBuilder
 from shared.quality_validator import QualityValidator
 from shared.style_memory import load_style
@@ -52,6 +58,7 @@ def generate_icon(
     *,
     description: str,
     output_dir: str | Path = "output",
+    provider: str | None = None,
     model: str | None = None,
     style_preset: str = DEFAULT_STYLE_PRESET,
     colors: list[str] | None = None,
@@ -74,6 +81,8 @@ def generate_icon(
         reference_image = load_style(style).path / "style-anchor.png"
     base_description, refinement_of = _resolve_description(description, refine_path)
     reference_hints = _analyze_reference(reference_image, vision_analyzer)
+    config = load_config()
+    selected_provider = resolve_provider(provider, config=config)
     builder = prompt_builder or PromptBuilder()
     prompt = builder.build(
         skill="icon-creator",
@@ -89,11 +98,23 @@ def generate_icon(
     run_dir = Path(output_dir) / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    logger = get_run_logger(run_dir, "openrouter")
-    image_client = client or OpenRouterClient()
+    logger = get_run_logger(run_dir, selected_provider)
+    image_client = client or create_image_client(selected_provider, config=config)
+    selected_model = resolve_model_for_provider(
+        provider=selected_provider,
+        requested_model=model,
+        prompt_model=prompt.model_recommendation,
+        config=config,
+    )
+    selected_fallback_models = fallback_models_for_provider(
+        provider=selected_provider,
+        requested_model=model,
+        prompt_fallbacks=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        config=config,
+    )
     result = image_client.generate(
-        model=prompt.model_recommendation,
-        fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        model=selected_model,
+        fallback_models=selected_fallback_models,
         prompt=prompt.positive,
         negative_prompt=prompt.negative,
         n=variants,
@@ -122,8 +143,8 @@ def generate_icon(
     if not best_result.passed:
         retry_count = 1
         retry_result = image_client.generate(
-            model=prompt.model_recommendation,
-            fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+            model=selected_model,
+            fallback_models=selected_fallback_models,
             prompt=_augment_prompt_for_retry(prompt.positive, best_result),
             negative_prompt=prompt.negative,
             n=variants,
@@ -169,15 +190,17 @@ def generate_icon(
             "colors": colors or [],
             "reference-image": str(reference_image) if reference_image else None,
             "style": style,
+            "provider": selected_provider,
             "model": model,
             "variants": variants,
             "seed": seed,
             "refine": str(refine_path) if refine_path else None,
         },
         "model": {
-            "id": getattr(result, "model_used", prompt.model_recommendation),
+            "id": getattr(result, "model_used", selected_model),
             "fallback_used": bool(getattr(result, "fallback_used", False)),
-            "requested": prompt.model_recommendation,
+            "requested": selected_model,
+            "prompt_recommendation": prompt.model_recommendation,
         },
         "prompt": {
             "positive": prompt.positive,
@@ -255,7 +278,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a single icon PNG.")
     parser.add_argument("--description", required=True, help="Icon description")
     parser.add_argument("--output-dir", default="output", help="Output root directory")
-    parser.add_argument("--model", default=None, help="OpenRouter model id override")
+    parser.add_argument(
+        "--provider",
+        default=None,
+        help="Image provider override: openrouter, openai, or google",
+    )
+    parser.add_argument("--model", default=None, help="Provider model override")
     parser.add_argument(
         "--style-preset",
         default=DEFAULT_STYLE_PRESET,
@@ -295,6 +323,7 @@ def main() -> int:
     run = generate_icon(
         description=args.description,
         output_dir=args.output_dir,
+        provider=args.provider,
         model=args.model,
         style_preset=args.style_preset,
         colors=parse_colors(args.colors),
