@@ -4,7 +4,7 @@ Single source of truth for talking to OpenRouter. Every skill that generates an 
 
 ## Responsibilities
 
-- Authenticate with OpenRouter (read `OPENROUTER_API_KEY` from env)
+- Authenticate with OpenRouter from explicit code injection, `OPENROUTER_API_KEY`, or `openrouter.api_key_file`
 - Call OpenRouter's current image-generation API with the chosen model
 - Retry on transient failures (rate limit, timeouts, 5xx) with exponential backoff
 - Fall back to declared backup models when primary model unavailable
@@ -17,7 +17,7 @@ Single source of truth for talking to OpenRouter. Every skill that generates an 
 ```python
 from shared.openrouter_client import OpenRouterClient
 
-client = OpenRouterClient()  # reads OPENROUTER_API_KEY
+client = OpenRouterClient()  # reads OPENROUTER_API_KEY or configured api_key_file
 
 # text-to-image; default modalities come from shared/presets/openrouter_models.yaml
 result = client.generate(
@@ -117,7 +117,7 @@ Official references live in [docs/presets/model-matrix.md](../presets/model-matr
 
 ### Authentication
 
-- Reads `OPENROUTER_API_KEY` from environment at construction
+- Reads auth at construction from explicit key, `OPENROUTER_API_KEY`, or `openrouter.api_key_file`
 - If missing, raises `OpenRouterError` with message linking to OpenRouter sign-up
 - Never stored in any output file, never logged in plain text
 

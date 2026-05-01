@@ -1,0 +1,26 @@
+social:
+  instagram-post: [1080, 1080]
+  instagram-story: [1080, 1920]
+  twitter-post: [1200, 675]
+  linkedin-post: [1200, 627]
+  facebook-cover: [820, 312]
+  youtube-thumbnail: [1280, 720]
+  tiktok: [1080, 1920]
+  og-image: [1200, 630]
+
+stickers:
+  imessage: [300, 408, 618]
+  telegram: 512
+  whatsapp: 512
+  whatsapp-tray: 96
+  emoji: 128
+
+print:
+  business-card-300dpi: [1050, 600]
+  poster-a4-300dpi: [2480, 3508]
+  poster-a3-300dpi: [3508, 4961]
+  tshirt-print-ready: [4500, 4500]
+
+web:
+  hero: [800, 1200, 1600, 2400]
+  avatar: [64, 128, 256, 512]

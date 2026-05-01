@@ -52,10 +52,11 @@ class OpenRouterClient:
     ) -> None:
         load_dotenv_if_present()
         self.config = config or load_config()
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY") or _read_api_key_file(self.config)
         if not self.api_key:
             raise OpenRouterError(
-                "OPENROUTER_API_KEY is not set. Create an OpenRouter key and export it first.",
+                "OpenRouter API key is not configured. Set OPENROUTER_API_KEY or configure "
+                "openrouter.api_key_file in ~/.icon-skills/config.yaml.",
                 code="auth",
             )
 
@@ -405,6 +406,20 @@ def _image_to_data_url(image: str | Path | Image.Image) -> str:
 def _load_yaml(path: str | Path) -> dict[str, Any]:
     with Path(path).open("r", encoding="utf-8") as handle:
         return yaml.safe_load(handle) or {}
+
+
+def _read_api_key_file(config: dict[str, Any]) -> str | None:
+    path_value = config.get("openrouter", {}).get("api_key_file")
+    if not path_value:
+        return None
+    path = Path(str(path_value)).expanduser()
+    if not path.exists():
+        raise OpenRouterError(
+            f"Configured OpenRouter API key file was not found: {path}",
+            code="auth",
+        )
+    key = path.read_text(encoding="utf-8").strip()
+    return key or None
 
 
 def _hash(value: str) -> str:

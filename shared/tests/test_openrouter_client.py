@@ -86,6 +86,32 @@ def test_missing_images_raises(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) 
         client.generate(model="sourceful/riverflow-v2-fast-preview", prompt="fox")
 
 
+def test_client_reads_api_key_from_config_file(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    monkeypatch.setattr("shared.openrouter_client.COST_LOG_PATH", tmp_path / "cost-log.json")
+    key_file = tmp_path / "openrouter.key"
+    key_file.write_text("file-key\n", encoding="utf-8")
+    session = FakeSession([FakeResponse(200, _image_response())])
+    client = OpenRouterClient(
+        config={
+            "openrouter": {
+                "base_url": "https://openrouter.ai/api/v1",
+                "api_key_file": str(key_file),
+                "timeout_seconds": 60,
+                "max_retries": 5,
+            }
+        },
+        session=session,
+    )
+
+    client.generate(model="sourceful/riverflow-v2-fast-preview", prompt="fox")
+
+    assert session.posts[0]["headers"]["Authorization"] == "Bearer file-key"
+
+
 def _image_response() -> dict[str, Any]:
     image = Image.new("RGBA", (2, 2), (255, 0, 0, 255))
     buffer = BytesIO()

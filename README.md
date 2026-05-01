@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 11 implemented**. `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, and `mascot-creator` v0.4 are implemented. Mascots now support master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`.
+> Status: **Phase 13 implemented**. `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, `mascot-creator` v0.4, `mascot-pack` v1.0, and `icon-set-creator` v1.0 are implemented.
 
 ---
 
@@ -14,6 +14,8 @@ You write a description, optionally drop a reference image, and get back:
 - A vectorized SVG (when the input is suitable)
 - A ready-to-ship asset pack: iOS `AppIcon.appiconset/`, Android `mipmap-*/` + adaptive icons, Web favicons + manifest, macOS, watchOS, Windows tiles
 - For mascots: master image, pose variants, expression variants, outfit variants, character sheet, pose-expression matrix, and `style-guide.md`
+- A mascot deliverable pack for social, stickers, print, and web
+- A coherent icon family from a list of subjects
 
 All driven by a Python skill triggered through your agent of choice.
 
@@ -86,6 +88,51 @@ python skills/icon-creator/scripts/generate.py \
   --seed 42
 ```
 
+## OpenRouter API key setup
+
+Use one of these local-only options. Never commit an API key to this repo.
+
+### Option A: shell config
+
+Add this to your shell config, for example `~/.zshrc`:
+
+```bash
+export OPENROUTER_API_KEY="sk-or-v1-your-key"
+```
+
+Then restart your terminal or run:
+
+```bash
+source ~/.zshrc
+```
+
+This works when the agent or skill process inherits your shell environment.
+
+### Option B: user-global key file
+
+This is safer for OpenCode or GUI-launched agents that may not load `~/.zshrc`.
+
+```bash
+mkdir -p ~/.icon-skills
+printf '%s\n' 'sk-or-v1-your-key' > ~/.icon-skills/openrouter.key
+chmod 600 ~/.icon-skills/openrouter.key
+```
+
+Create or edit `~/.icon-skills/config.yaml`:
+
+```yaml
+openrouter:
+  api_key_file: ~/.icon-skills/openrouter.key
+```
+
+When a generation skill runs, it checks keys in this order:
+
+1. Explicit key passed by code
+2. `OPENROUTER_API_KEY`
+3. `openrouter.api_key_file` from `~/.icon-skills/config.yaml`
+
+The key value is not written to `metadata.json`, logs, prompts, or generated outputs.
+
 The final stdout line is the selected `master.png`. Each run writes:
 
 ```text
@@ -145,6 +192,24 @@ python skills/mascot-creator/scripts/generate.py \
 ```
 
 For a cheap live smoke test, use `--variants 1 --best-of-n 1`.
+
+Package a mascot output locally:
+
+```bash
+python skills/mascot-pack/scripts/pack.py \
+  --master output/happy-fox-{timestamp}/master.png \
+  --variants-dir output/happy-fox-{timestamp}/ \
+  --targets all
+```
+
+Generate a coherent icon set:
+
+```bash
+python skills/icon-set-creator/scripts/generate_set.py \
+  --icons '["home","search","profile","settings"]' \
+  --style-preset flat \
+  --colors "#2563EB,#1E40AF"
+```
 
 ---
 

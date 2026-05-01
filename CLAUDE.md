@@ -13,9 +13,9 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 11 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, and `mascot-creator` v0.4 exist.**
+**Phase 13 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, `mascot-creator` v0.4, `mascot-pack` v1.0, and `icon-set-creator` v1.0 exist.**
 
-This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, `png-to-svg`, and `mascot-creator`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. `mascot-creator` supports master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`. Later skill folders are still phase-gated.
+This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, `png-to-svg`, `mascot-creator`, `mascot-pack`, and `icon-set-creator`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. `mascot-creator` supports master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`. `mascot-pack` packages mascot outputs for social, stickers, print, and web. `icon-set-creator` generates coherent icon families. Later work is cross-skill hardening, polish, docs, and release.
 
 Current / target layout:
 
@@ -27,11 +27,11 @@ icon-creator-skills/
 ├── shared/                           # Phase 00 shared package
 ├── skills/                           # added per phase
 │   ├── icon-creator/                 # phases 1-3
-│   ├── icon-set-creator/             # phase 13
+│   ├── icon-set-creator/             # phase 13 implemented
 │   ├── mascot-creator/               # phases 8-11 implemented
 │   ├── png-to-svg/                   # phases 6-7 implemented
 │   ├── app-icon-pack/                # phases 4-5 implemented
-│   └── mascot-pack/                  # phase 12
+│   └── mascot-pack/                  # phase 12 implemented
 └── tests/
 ```
 
@@ -113,7 +113,7 @@ Look at `docs/phases/README.md`. The phase that's not yet "done" is the next one
 - **Errors:** subclass `IconSkillsError`, see `shared/errors.py` (after phase 0).
 - **Configuration:** YAML in `shared/presets/`, never hardcoded in Python.
 - **Prompts:** Jinja templates in `shared/presets/prompt_templates/`, never hardcoded.
-- **API key:** env var only (`OPENROUTER_API_KEY`). Never logged. Never written to any output file.
+- **API key:** read from explicit code injection, `OPENROUTER_API_KEY`, or `openrouter.api_key_file` in `~/.icon-skills/config.yaml`. Never log it. Never write it to any output file.
 
 ## Phase plan (TL;DR)
 

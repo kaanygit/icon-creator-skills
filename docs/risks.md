@@ -83,7 +83,7 @@ Severity scale: **HIGH** (could kill the project's usefulness), **MEDIUM** (degr
 **The problem.** The user's API key is sensitive. A skill that logs it, writes it to metadata, or accepts it as a CLI arg invites accidents.
 
 **Mitigations.**
-- Key only ever read from `OPENROUTER_API_KEY` env var, never from CLI args, never written to any file the skill creates
+- Key is read from explicit code injection, `OPENROUTER_API_KEY`, or a user-local `openrouter.api_key_file`; never from CLI args and never written to any file the skill creates
 - `metadata.json` explicitly excludes any header-bearing data; only the model name is captured
 - `.gitignore` ships with `.env`, `*.env`, `.env.local`
 - Phase 15 polish step adds an explicit log scrubber that redacts any string matching the key pattern even if it slips into a debug log

@@ -48,7 +48,7 @@ cfg = load_config()
 #   4. per-call args (passed in by skill)
 ```
 
-`OPENROUTER_API_KEY` is **only** read from environment; never from the merged config blob. This is a deliberate isolation.
+OpenRouter auth is read in priority order: explicit code injection, `OPENROUTER_API_KEY`, then `openrouter.api_key_file` in `~/.icon-skills/config.yaml`. The merged config may contain only a path to a local key file, not the key value itself. Keys are never logged or written to run metadata.
 
 ## Cross-cutting: testing
 

@@ -51,6 +51,19 @@ class CharacterTraits:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class IconSetStyleGuide:
+    colors: list[str]
+    edge_density: float
+    gradient_prevalence: float
+    stroke_weight_estimate: str
+    art_style: str
+    descriptor: str
+
+    def to_dict(self) -> dict[str, object]:
+        return asdict(self)
+
+
 class VisionAnalyzer:
     """Small deterministic analyzer for Phase 02 reference images."""
 
@@ -133,6 +146,36 @@ class VisionAnalyzer:
             accessories=accessories,
             art_style=art_style,
             anchor_text=anchor_text,
+        )
+
+    def extract_icon_set_style(
+        self,
+        image_or_path: Image.Image | str | Path,
+        *,
+        colors: list[str] | None = None,
+    ) -> IconSetStyleGuide:
+        image = (
+            ensure_alpha(load_image(image_or_path))
+            if isinstance(image_or_path, str | Path)
+            else ensure_alpha(image_or_path)
+        )
+        palette = colors or _extract_palette_from_image(image)
+        edge_density = _edge_density(image)
+        gradient_prevalence = _gradient_prevalence(image)
+        stroke_weight = _stroke_weight(edge_density)
+        art_style = _classify_style(edge_density, gradient_prevalence)
+        descriptor = (
+            f"{art_style} icon set style, colors {', '.join(palette[:5])}, "
+            f"{stroke_weight} stroke weight, edge density {edge_density:.2f}, "
+            f"gradient prevalence {gradient_prevalence:.2f}"
+        )
+        return IconSetStyleGuide(
+            colors=palette,
+            edge_density=edge_density,
+            gradient_prevalence=gradient_prevalence,
+            stroke_weight_estimate=stroke_weight,
+            art_style=art_style,
+            descriptor=descriptor,
         )
 
 
