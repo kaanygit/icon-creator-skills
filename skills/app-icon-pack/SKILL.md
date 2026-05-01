@@ -10,7 +10,7 @@ Use this skill when the user has a `master.png` and wants ready-to-drop app icon
 ## How to invoke
 
 ```bash
-python skills/app-icon-pack/scripts/pack.py \
+icon-skills create-app-icon-pack \
   --master output/example/master.png \
   --app-name "Example" \
   --platforms ios,android,web,macos,watchos,windows

@@ -12,14 +12,17 @@ Use this skill when the user wants a mascot, character, brand character, mascot 
 1. Collect `description` and `--type`.
    - Valid types: `stylized`, `realistic`, `artistic`.
    - If `--preset` is omitted, defaults are `flat-vector`, `photoreal-3d`, and `watercolor`.
-2. Run `skills/mascot-creator/scripts/generate.py`.
-3. Return the output directory and key files: `master.png`, `character-sheet.png` when variants exist, `style-guide.md`, and `metadata.json`.
-4. If the user asks to inspect the result, copy the run folder to Desktop.
+2. Run `icon-skills estimate mascot` if variants are requested.
+3. Run `icon-skills create-mascot`.
+4. Return the output directory and key files: `master.png`, `character-sheet.png` when variants exist, `style-guide.md`, and `metadata.json`.
+5. If the user asks to inspect the result, copy the run folder to Desktop.
 
 ## CLI
 
 ```bash
-.venv/bin/python skills/mascot-creator/scripts/generate.py \
+icon-skills estimate mascot --variants 1 --views front,side,3-quarter,back --poses idle,waving,thinking --expressions happy,surprised --outfits casual,formal --best-of-n 1
+
+icon-skills create-mascot \
   --description "wise old owl, professor, glasses" \
   --type stylized \
   --preset 3d-toon \

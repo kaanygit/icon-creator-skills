@@ -1,12 +1,14 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 - 2026-05-02
 
 - Added Phase 18 multi-provider image generation backends for OpenRouter, OpenAI, and Google Gemini.
 - Added `--provider` support to generation CLIs and provider/model defaults in `~/.icon-skills/config.yaml`.
 - Added offline provider tests for OpenAI, Google Gemini, and model-resolution behavior.
 - Added OpenCode-focused Skills CLI install docs using `npx skills add kaanygit/icon-creator-skills`.
 - Added visual gallery docs and provider-aware `icon-skills doctor` output.
+- Added top-level `icon-skills create-*` wrappers, `doctor --fix`, and offline request estimators.
+- Added marketplace listing prep docs for skills directories.
 
 ## 1.0.0 - 2026-05-01
 

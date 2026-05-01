@@ -61,6 +61,12 @@ pip install -e ".[dev]"
 Preferred for OpenCode / GUI-launched agents:
 
 ```bash
+icon-skills doctor --fix
+```
+
+Then add at least one real key:
+
+```bash
 mkdir -p ~/.icon-skills
 printf '%s\n' 'sk-or-v1-your-key' > ~/.icon-skills/openrouter.key
 printf '%s\n' 'sk-your-openai-key' > ~/.icon-skills/openai.key
@@ -100,7 +106,7 @@ export GEMINI_API_KEY="your-google-gemini-key"
 Override provider and model per run when needed:
 
 ```bash
-python skills/icon-creator/scripts/generate.py \
+icon-skills create-icon \
   --description "minimal fox" \
   --provider openrouter \
   --model google/gemini-2.5-flash-image
@@ -110,6 +116,7 @@ python skills/icon-creator/scripts/generate.py \
 
 ```bash
 icon-skills doctor
+icon-skills estimate icon --variants 3
 python -m pytest
 ```
 

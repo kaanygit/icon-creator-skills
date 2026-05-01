@@ -2,11 +2,11 @@
 
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-black.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-black.svg)](CHANGELOG.md)
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Supports OpenRouter, OpenAI, and Google Gemini image providers. Designed to install into OpenCode, Codex, Claude Code, Cursor, and other agents through the open Skills CLI.
 
-> Status: **v1.0.0 + Phase 18 provider support**. The repo is public and installable through `npx skills add`.
+> Status: **v1.1.0**. The repo is public and installable through `npx skills add`.
 
 ---
 
@@ -159,16 +159,44 @@ icon-creator-skills/
 │   ├── png-to-svg/
 │   ├── app-icon-pack/
 │   └── mascot-pack/
+```
+
 ## Quick start
 
 ```bash
 export OPENROUTER_API_KEY="..."
 
-python skills/icon-creator/scripts/generate.py \
+icon-skills create-icon \
   --description "minimal fox app icon" \
   --style-preset gradient \
   --variants 3 \
   --seed 42
+```
+
+## Five-minute demo flow
+
+```bash
+# 1. Prepare local config scaffolding.
+icon-skills doctor --fix
+
+# 2. Add your key to the path shown in ~/.icon-skills/config.yaml.
+printf '%s\n' 'sk-or-v1-your-key' > ~/.icon-skills/openrouter.key
+chmod 600 ~/.icon-skills/openrouter.key
+
+# 3. Estimate before spending provider credits.
+icon-skills estimate icon --variants 3
+
+# 4. Generate the master icon.
+icon-skills create-icon \
+  --description "geometric fox finance app icon" \
+  --style-preset gradient \
+  --variants 3
+
+# 5. Package the selected master for platforms.
+icon-skills create-app-icon-pack \
+  --master output/geometric-fox-finance-app-icon-{timestamp}/master.png \
+  --app-name Foxy \
+  --platforms ios,android,web
 ```
 
 ## Install with `npx skills`
@@ -337,15 +365,19 @@ icon-skills styles show brand-flat
 
 Saved styles live in `~/.icon-skills/styles/`.
 
-## Doctor and cost summary
+## Doctor, estimates, and cost summary
 
 ```bash
 icon-skills doctor
+icon-skills doctor --fix
+icon-skills estimate mascot --variants 1 --poses idle,waving --expressions happy --best-of-n 1
 icon-skills cost
 ```
 
 `doctor` checks Python, required Python packages, optional native/vector dependencies, the default
 image provider, provider models, and API key configuration without printing key values.
+`doctor --fix` creates `~/.icon-skills/`, a config template if missing, and the style-memory
+directory. `estimate` reports provider request/image counts without making API calls.
 
 The final stdout line is the selected `master.png`. Each run writes:
 
@@ -434,6 +466,8 @@ If you want the **30-second pitch**: [docs/vision.md](docs/vision.md)
 If you want to **install and run it**: [docs/install.md](docs/install.md) → [docs/getting-started.md](docs/getting-started.md).
 
 If you want **OpenCode setup**: [docs/opencode.md](docs/opencode.md).
+
+If you want **marketplace listing copy**: [docs/marketplace.md](docs/marketplace.md).
 
 If something fails: [docs/troubleshooting.md](docs/troubleshooting.md).
 

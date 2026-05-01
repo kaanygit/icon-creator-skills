@@ -10,6 +10,7 @@ practical distribution work:
 - Phase 20: OpenCode UX polish
 - Phase 21: visual gallery
 - Phase 22: Skills CLI installation path
+- v1.1.0 release packaging
 
 ## Acceptance Checklist
 
@@ -20,7 +21,11 @@ practical distribution work:
 - [x] `docs/opencode.md` provides OpenCode prompts, provider config, and cost discipline guidance.
 - [x] `docs/gallery.md` shows prompt, command, output image, and expected files.
 - [x] `icon-skills doctor` reports default provider, provider models, and provider key status.
+- [x] `icon-skills doctor --fix` creates local config scaffolding.
+- [x] `icon-skills estimate` reports call/image counts without provider calls.
+- [x] `icon-skills create-icon`, `create-app-icon-pack`, `create-mascot`, and `create-icon-set` wrap the long script commands.
 - [x] Offline tests cover provider key status checks.
+- [x] Marketplace listing copy exists in `docs/marketplace.md`.
 - [x] `npx skills add . --list` discovers all 6 skills locally.
 - [x] No live provider API calls are required for acceptance.
 

@@ -3,13 +3,14 @@
 ## 1. Check your environment
 
 ```bash
-icon-skills doctor
+icon-skills doctor --fix
 ```
 
 ## 2. Generate your first icon
 
 ```bash
-python skills/icon-creator/scripts/generate.py \
+icon-skills estimate icon --variants 3
+icon-skills create-icon \
   --description "minimal fox app icon" \
   --style-preset gradient \
   --variants 3
@@ -24,7 +25,7 @@ output/minimal-fox-app-icon-{timestamp}/master.png
 ## 3. Package the icon
 
 ```bash
-python skills/app-icon-pack/scripts/pack.py \
+icon-skills create-app-icon-pack \
   --master output/minimal-fox-app-icon-{timestamp}/master.png \
   --app-name Foxy \
   --platforms all
@@ -43,7 +44,8 @@ python skills/png-to-svg/scripts/vectorize.py \
 ## 5. Generate a mascot
 
 ```bash
-python skills/mascot-creator/scripts/generate.py \
+icon-skills estimate mascot --variants 1 --poses idle,waving --expressions happy,curious --best-of-n 1
+icon-skills create-mascot \
   --description "friendly fox explorer mascot" \
   --type stylized \
   --preset cartoon-2d \
@@ -63,7 +65,8 @@ python skills/mascot-pack/scripts/pack.py \
 ## 7. Generate an icon family
 
 ```bash
-python skills/icon-set-creator/scripts/generate_set.py \
+icon-skills estimate icon-set --icons '["home","search","profile","settings"]' --best-of-n 1
+icon-skills create-icon-set \
   --icons '["home","search","profile","settings"]' \
   --style-preset flat \
   --colors "#2563EB,#1E40AF"

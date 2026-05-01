@@ -10,7 +10,9 @@ Use this skill when the user wants multiple icons that must look like one family
 ## CLI
 
 ```bash
-.venv/bin/python skills/icon-set-creator/scripts/generate_set.py \
+icon-skills estimate icon-set --icons '["home","search","profile","settings"]' --best-of-n 1
+
+icon-skills create-icon-set \
   --icons '["home","search","profile","settings"]' \
   --style-preset flat \
   --colors "#2563EB,#1E40AF"

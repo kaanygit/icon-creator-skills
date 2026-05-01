@@ -30,7 +30,7 @@ OpenCode may not inherit your shell startup files, so key files are usually more
 than shell exports.
 
 ```bash
-mkdir -p ~/.icon-skills
+icon-skills doctor --fix
 printf '%s\n' 'sk-or-v1-your-key' > ~/.icon-skills/openrouter.key
 chmod 600 ~/.icon-skills/openrouter.key
 ```
@@ -81,3 +81,9 @@ Use app-icon-pack on output/my-icon/master.png for iOS, Android, and Web.
 Mascot and icon-set generation can fan out into many provider calls. For quick checks, ask
 OpenCode to use `--variants 1 --best-of-n 1`, or use existing output files with packaging
 skills that do not call an image provider.
+
+You can also ask OpenCode to run estimates first:
+
+```text
+Run icon-skills estimate mascot for 2 poses and 2 expressions before generating anything.
+```
