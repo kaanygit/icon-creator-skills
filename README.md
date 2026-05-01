@@ -8,6 +8,19 @@ Open-source agent skills toolkit for **icon and mascot generation** with multi-p
 
 > Status: **v1.1.0**. The repo is public and installable through `npx skills add`.
 
+![icon-creator-skills preview](docs/assets/marketplace/readme-preview.png)
+
+## At a glance
+
+| Need | Use this | Output |
+|---|---|---|
+| One icon, app icon, favicon, logo mark | `icon-creator` | `master.png`, variants, validation metadata |
+| Full app icon asset pack | `app-icon-pack` | iOS, Android, Web, macOS, watchOS, Windows assets + zip |
+| Mascot or brand character | `mascot-creator` | master, poses, expressions, character sheet, style guide |
+| Mascot deliverables | `mascot-pack` | social, sticker, print, web exports + zip |
+| Matching icon family | `icon-set-creator` | per-icon PNGs, preview grid, shared style guide |
+| Bitmap to vector | `png-to-svg` | SVG, comparison PNG, suitability stats |
+
 ---
 
 ## Example outputs
