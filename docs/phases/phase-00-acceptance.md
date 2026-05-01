@@ -3,7 +3,7 @@
 ## Phase
 
 - Phase: 00
-- Commit: 561f3b9
+- Commit: 17873e7
 - Date: 2026-05-01
 - Reviewer: kaanygit / Codex
 - Environment: macOS, zsh, Python 3.14.4 in local `.venv`
