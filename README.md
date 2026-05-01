@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 00 implemented**. Shared Python infrastructure exists; user-facing skills have not been implemented yet.
+> Status: **Phase 01 implemented**. Shared Python infrastructure and `icon-creator` v0.1 exist; later skills are still planned.
 
 ---
 
@@ -58,7 +58,7 @@ icon-creator-skills/
 │   ├── logging_setup.py
 │   ├── smoke_test.py
 │   └── presets/
-└── skills/                       # planned; actual skill implementations added as phases land
+└── skills/                       # skill implementations added as phases land
 │   ├── icon-creator/
 │   ├── icon-set-creator/
 │   ├── mascot-creator/

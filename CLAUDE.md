@@ -13,11 +13,11 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 00 implemented. Shared infrastructure exists; no user-facing skills yet.**
+**Phase 01 implemented. Shared infrastructure and `icon-creator` v0.1 exist.**
 
-This repo now includes the Phase 00 Python package skeleton under `shared/`, along with pyproject/test/lint/CI scaffolding. The `skills/` folder does not exist yet; it starts in Phase 01.
+This repo now includes the Phase 00 Python package skeleton under `shared/`, plus the first user-facing skill under `skills/icon-creator/`. Later skill folders are still phase-gated.
 
-When implementation begins, the layout will become:
+Current / target layout:
 
 ```
 icon-creator-skills/
