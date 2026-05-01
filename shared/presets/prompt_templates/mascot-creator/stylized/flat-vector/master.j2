@@ -1,0 +1,7 @@
+{% extends "mascot-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, flat vector illustration, solid colors, modern brand mascot style, original mascot master design, neutral front-facing presentation, full character visible, clean centered composition, transparent or simple clean background, no text, no watermark
+{%- if personality %}, personality: {{ personality }}{% endif %}
+{%- if colors %}, preferred palette: {{ colors | join(", ") }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}

@@ -65,10 +65,11 @@ class PromptBuilder:
         user_extras: str | None = None,
         extra_negatives: str | None = None,
         model_override: str | None = None,
+        template_override: str | None = None,
         **extra_context: Any,
     ) -> PromptResult:
         preset_config = self._load_preset(skill, preset)
-        template_name = preset_config.get("template", f"{preset}.j2")
+        template_name = template_override or preset_config.get("template", f"{preset}.j2")
         template_path = f"{skill}/{template_name}"
         template = self._load_template(template_path, skill=skill)
         context = {

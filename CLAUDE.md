@@ -13,9 +13,9 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 07 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, and `png-to-svg` v0.2 exist.**
+**Phase 11 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, and `mascot-creator` v0.4 exist.**
 
-This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, and `png-to-svg`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. Later skill folders are still phase-gated.
+This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, `png-to-svg`, and `mascot-creator`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. `mascot-creator` supports master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`. Later skill folders are still phase-gated.
 
 Current / target layout:
 
@@ -28,7 +28,7 @@ icon-creator-skills/
 ├── skills/                           # added per phase
 │   ├── icon-creator/                 # phases 1-3
 │   ├── icon-set-creator/             # phase 13
-│   ├── mascot-creator/               # phases 8-11
+│   ├── mascot-creator/               # phases 8-11 implemented
 │   ├── png-to-svg/                   # phases 6-7 implemented
 │   ├── app-icon-pack/                # phases 4-5 implemented
 │   └── mascot-pack/                  # phase 12
@@ -44,7 +44,7 @@ icon-creator-skills/
 - **MIT license.**
 - **No telemetry, ever.**
 - **Phased build with explicit acceptance tests.** Each phase has a manual checkpoint in OpenCode before moving on.
-- **Mascot two-level taxonomy:** `type ∈ {stylized, realistic, artistic}` × `preset` (~17 named presets).
+- **Mascot two-level taxonomy:** `type ∈ {stylized, realistic, artistic}` × `preset` (19 named presets).
 - **Output format:** always a flat directory with optional zip. Never zip-only.
 
 Full rationale per decision: `docs/decisions.md`.
@@ -130,7 +130,7 @@ One preflight phase plus 18 implementation phases. Built in dependency order. Mo
 | 05 | app-icon-pack v1.1 — macOS + watchOS + Windows |
 | 06 | png-to-svg v0.1 — vtracer integration |
 | 07 | png-to-svg v0.2 — potrace + imagetracer + auto-select |
-| 08 | mascot-creator v0.1 — master generation, 17 presets |
+| 08 | mascot-creator v0.1 — master generation, 19 presets |
 | 09 | mascot-creator v0.2 — multi-view character sheet |
 | 10 | mascot-creator v0.3 — pose + expression variants |
 | 11 | mascot-creator v0.4 — outfits, style-guide.md |

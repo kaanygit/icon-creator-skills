@@ -1,0 +1,11 @@
+{% block positive %}
+{{ description }}, {{ style_phrase }}, complete original mascot character, full body when appropriate, clear silhouette, expressive readable face, centered composition, clean background, no text, no watermark
+{%- if personality %}, personality: {{ personality }}{% endif %}
+{%- if colors %}, preferred palette: {{ colors | join(", ") }}{% endif %}
+{%- if anchor_text %}, preserve this locked character identity: {{ anchor_text }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}
+
+{% block negative %}
+text, words, letters, signature, watermark, logo text, extra limbs, duplicate character, distorted face, cropped head, cropped feet, blurry, low quality, inconsistent style, {{ negative_extras }}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "mascot-creator/_default.j2" %}
+{% block positive %}
+same locked mascot character as the reference, {{ anchor_text }}, line art mascot, contour drawing, single color, no fill, minimal expressive outline, {{ pose }} pose, front or three-quarter view, neutral expression, preserve palette, proportions, accessories, face design, and silhouette, single character, no text
+{%- if personality %}, personality: {{ personality }}{% endif %}
+{%- if colors %}, preferred palette: {{ colors | join(", ") }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}

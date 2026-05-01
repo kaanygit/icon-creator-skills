@@ -1,0 +1,320 @@
+mascot-creator:
+  flat-vector:
+    type: stylized
+    template: stylized/flat-vector/master.j2
+    variant_templates:
+      view: stylized/flat-vector/view-variant.j2
+      pose: stylized/flat-vector/pose-variant.j2
+      expression: stylized/flat-vector/expression-variant.j2
+      outfit: stylized/flat-vector/outfit-variant.j2
+      matrix: stylized/flat-vector/matrix-variant.j2
+    primary_model: sourceful/riverflow-v2-fast-preview
+    fallback_models:
+    - black-forest-labs/flux.2-pro
+    style_phrase: flat vector illustration, solid colors, modern brand mascot style
+    negative_extras: gradient, photorealism, clutter, text, watermark
+    description: flat vector illustration, solid colors, modern brand mascot style
+  cartoon-2d:
+    type: stylized
+    template: stylized/cartoon-2d/master.j2
+    variant_templates:
+      view: stylized/cartoon-2d/view-variant.j2
+      pose: stylized/cartoon-2d/pose-variant.j2
+      expression: stylized/cartoon-2d/expression-variant.j2
+      outfit: stylized/cartoon-2d/outfit-variant.j2
+      matrix: stylized/cartoon-2d/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: 2D cartoon character, animated show style, bold outlines, expressive
+      face
+    negative_extras: photorealism, muted expression, realistic photo, text
+    description: 2D cartoon character, animated show style, bold outlines, expressive
+      face
+  chibi-kawaii:
+    type: stylized
+    template: stylized/chibi-kawaii/master.j2
+    variant_templates:
+      view: stylized/chibi-kawaii/view-variant.j2
+      pose: stylized/chibi-kawaii/pose-variant.j2
+      expression: stylized/chibi-kawaii/expression-variant.j2
+      outfit: stylized/chibi-kawaii/outfit-variant.j2
+      matrix: stylized/chibi-kawaii/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: chibi kawaii character, big head, small body, oversized expressive
+      eyes, pastel palette
+    negative_extras: realistic anatomy, scary mood, harsh shadows, text
+    description: chibi kawaii character, big head, small body, oversized expressive
+      eyes, pastel palette
+  3d-toon:
+    type: stylized
+    template: stylized/3d-toon/master.j2
+    variant_templates:
+      view: stylized/3d-toon/view-variant.j2
+      pose: stylized/3d-toon/pose-variant.j2
+      expression: stylized/3d-toon/expression-variant.j2
+      outfit: stylized/3d-toon/outfit-variant.j2
+      matrix: stylized/3d-toon/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: 3D toon style, Pixar-like, soft shading, rounded forms, friendly
+      character render
+    negative_extras: photorealistic human skin, flat 2D, uncanny realism, text
+    description: 3D toon style, Pixar-like, soft shading, rounded forms, friendly
+      character render
+  mascot-corporate:
+    type: stylized
+    template: stylized/mascot-corporate/master.j2
+    variant_templates:
+      view: stylized/mascot-corporate/view-variant.j2
+      pose: stylized/mascot-corporate/pose-variant.j2
+      expression: stylized/mascot-corporate/expression-variant.j2
+      outfit: stylized/mascot-corporate/outfit-variant.j2
+      matrix: stylized/mascot-corporate/matrix-variant.j2
+    primary_model: sourceful/riverflow-v2-fast-preview
+    fallback_models:
+    - black-forest-labs/flux.2-pro
+    style_phrase: corporate brand mascot, recognizable silhouette, friendly, scalable,
+      polished SaaS identity
+    negative_extras: busy scene, complex background, realism, text
+    description: corporate brand mascot, recognizable silhouette, friendly, scalable,
+      polished SaaS identity
+  sticker-style:
+    type: stylized
+    template: stylized/sticker-style/master.j2
+    variant_templates:
+      view: stylized/sticker-style/view-variant.j2
+      pose: stylized/sticker-style/pose-variant.j2
+      expression: stylized/sticker-style/expression-variant.j2
+      outfit: stylized/sticker-style/outfit-variant.j2
+      matrix: stylized/sticker-style/matrix-variant.j2
+    primary_model: sourceful/riverflow-v2-fast-preview
+    fallback_models:
+    - black-forest-labs/flux.2-pro
+    style_phrase: sticker style mascot, bold white outline, saturated colors, expressive
+      pose, transparent background
+    negative_extras: thin lines, photorealism, clutter, no sticker border
+    description: sticker style mascot, bold white outline, saturated colors, expressive
+      pose, transparent background
+  low-poly:
+    type: stylized
+    template: stylized/low-poly/master.j2
+    variant_templates:
+      view: stylized/low-poly/view-variant.j2
+      pose: stylized/low-poly/pose-variant.j2
+      expression: stylized/low-poly/expression-variant.j2
+      outfit: stylized/low-poly/outfit-variant.j2
+      matrix: stylized/low-poly/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: low-poly geometric character, faceted flat-shaded polygons, minimalist
+      3D mascot
+    negative_extras: smooth realism, painterly brushwork, text, clutter
+    description: low-poly geometric character, faceted flat-shaded polygons, minimalist
+      3D mascot
+  photoreal-2d:
+    type: realistic
+    template: realistic/photoreal-2d/master.j2
+    variant_templates:
+      view: realistic/photoreal-2d/view-variant.j2
+      pose: realistic/photoreal-2d/pose-variant.j2
+      expression: realistic/photoreal-2d/expression-variant.j2
+      outfit: realistic/photoreal-2d/outfit-variant.j2
+      matrix: realistic/photoreal-2d/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: photorealistic 2D illustration, detailed rendering, painterly realism,
+      lifelike texture
+    negative_extras: cartoon, chibi, low detail, text
+    description: photorealistic 2D illustration, detailed rendering, painterly realism,
+      lifelike texture
+  photoreal-3d:
+    type: realistic
+    template: realistic/photoreal-3d/master.j2
+    variant_templates:
+      view: realistic/photoreal-3d/view-variant.j2
+      pose: realistic/photoreal-3d/pose-variant.j2
+      expression: realistic/photoreal-3d/expression-variant.j2
+      outfit: realistic/photoreal-3d/outfit-variant.j2
+      matrix: realistic/photoreal-3d/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: photorealistic 3D CGI character, studio lighting, sharp focus, premium
+      render
+    negative_extras: flat vector, line art, low-poly, text
+    description: photorealistic 3D CGI character, studio lighting, sharp focus, premium
+      render
+  hyperreal:
+    type: realistic
+    template: realistic/hyperreal/master.j2
+    variant_templates:
+      view: realistic/hyperreal/view-variant.j2
+      pose: realistic/hyperreal/pose-variant.j2
+      expression: realistic/hyperreal/expression-variant.j2
+      outfit: realistic/hyperreal/outfit-variant.j2
+      matrix: realistic/hyperreal/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: hyperrealistic mascot character, extreme detail, dramatic studio
+      lighting, ultra sharp
+    negative_extras: cartoon, simplified vector, low detail, text
+    description: hyperrealistic mascot character, extreme detail, dramatic studio
+      lighting, ultra sharp
+  documentary:
+    type: realistic
+    template: realistic/documentary/master.j2
+    variant_templates:
+      view: realistic/documentary/view-variant.j2
+      pose: realistic/documentary/pose-variant.j2
+      expression: realistic/documentary/expression-variant.j2
+      outfit: realistic/documentary/outfit-variant.j2
+      matrix: realistic/documentary/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: documentary wildlife photograph look, natural lighting, authentic
+      environment, lifelike subject
+    negative_extras: cartoon, studio toy render, flat vector, text
+    description: documentary wildlife photograph look, natural lighting, authentic
+      environment, lifelike subject
+  portrait:
+    type: realistic
+    template: realistic/portrait/master.j2
+    variant_templates:
+      view: realistic/portrait/view-variant.j2
+      pose: realistic/portrait/pose-variant.j2
+      expression: realistic/portrait/expression-variant.j2
+      outfit: realistic/portrait/outfit-variant.j2
+      matrix: realistic/portrait/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: realistic character portrait, bust framing, focused face, soft studio
+      lighting
+    negative_extras: full body action pose, cartoon, text, clutter
+    description: realistic character portrait, bust framing, focused face, soft studio
+      lighting
+  watercolor:
+    type: artistic
+    template: artistic/watercolor/master.j2
+    variant_templates:
+      view: artistic/watercolor/view-variant.j2
+      pose: artistic/watercolor/pose-variant.j2
+      expression: artistic/watercolor/expression-variant.j2
+      outfit: artistic/watercolor/outfit-variant.j2
+      matrix: artistic/watercolor/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: watercolor painting mascot, visible washes, paper texture, organic
+      edges
+    negative_extras: photorealistic render, vector-flat, hard plastic, text
+    description: watercolor painting mascot, visible washes, paper texture, organic
+      edges
+  pencil-sketch:
+    type: artistic
+    template: artistic/pencil-sketch/master.j2
+    variant_templates:
+      view: artistic/pencil-sketch/view-variant.j2
+      pose: artistic/pencil-sketch/pose-variant.j2
+      expression: artistic/pencil-sketch/expression-variant.j2
+      outfit: artistic/pencil-sketch/outfit-variant.j2
+      matrix: artistic/pencil-sketch/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: pencil sketch mascot, graphite hatching, monochrome hand-drawn shading
+    negative_extras: full color render, glossy 3D, text, watermark
+    description: pencil sketch mascot, graphite hatching, monochrome hand-drawn shading
+  pixel-art:
+    type: artistic
+    template: artistic/pixel-art/master.j2
+    variant_templates:
+      view: artistic/pixel-art/view-variant.j2
+      pose: artistic/pixel-art/pose-variant.j2
+      expression: artistic/pixel-art/expression-variant.j2
+      outfit: artistic/pixel-art/outfit-variant.j2
+      matrix: artistic/pixel-art/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: pixel art mascot, 16-bit retro game style, limited palette, crisp
+      blocky pixels
+    negative_extras: smooth gradients, antialiasing, photorealism, text
+    description: pixel art mascot, 16-bit retro game style, limited palette, crisp
+      blocky pixels
+  painterly:
+    type: artistic
+    template: artistic/painterly/master.j2
+    variant_templates:
+      view: artistic/painterly/view-variant.j2
+      pose: artistic/painterly/pose-variant.j2
+      expression: artistic/painterly/expression-variant.j2
+      outfit: artistic/painterly/outfit-variant.j2
+      matrix: artistic/painterly/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: painterly oil-painting mascot, visible brushstrokes, rich texture,
+      traditional media depth
+    negative_extras: flat vector, pixel art, text, watermark
+    description: painterly oil-painting mascot, visible brushstrokes, rich texture,
+      traditional media depth
+  line-art:
+    type: artistic
+    template: artistic/line-art/master.j2
+    variant_templates:
+      view: artistic/line-art/view-variant.j2
+      pose: artistic/line-art/pose-variant.j2
+      expression: artistic/line-art/expression-variant.j2
+      outfit: artistic/line-art/outfit-variant.j2
+      matrix: artistic/line-art/matrix-variant.j2
+    primary_model: sourceful/riverflow-v2-fast-preview
+    fallback_models:
+    - black-forest-labs/flux.2-pro
+    style_phrase: line art mascot, contour drawing, single color, no fill, minimal
+      expressive outline
+    negative_extras: filled shapes, gradients, photorealism, text
+    description: line art mascot, contour drawing, single color, no fill, minimal
+      expressive outline
+  ink-wash:
+    type: artistic
+    template: artistic/ink-wash/master.j2
+    variant_templates:
+      view: artistic/ink-wash/view-variant.j2
+      pose: artistic/ink-wash/pose-variant.j2
+      expression: artistic/ink-wash/expression-variant.j2
+      outfit: artistic/ink-wash/outfit-variant.j2
+      matrix: artistic/ink-wash/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: sumi-e ink wash mascot, bold brush strokes, monochrome ink, traditional
+      wash texture
+    negative_extras: neon colors, glossy 3D, flat vector, text
+    description: sumi-e ink wash mascot, bold brush strokes, monochrome ink, traditional
+      wash texture
+  chalk:
+    type: artistic
+    template: artistic/chalk/master.j2
+    variant_templates:
+      view: artistic/chalk/view-variant.j2
+      pose: artistic/chalk/pose-variant.j2
+      expression: artistic/chalk/expression-variant.j2
+      outfit: artistic/chalk/outfit-variant.j2
+      matrix: artistic/chalk/matrix-variant.j2
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models:
+    - sourceful/riverflow-v2-fast-preview
+    style_phrase: chalk drawing mascot, soft smudgy edges, hand-drawn chalkboard or
+      pastel surface
+    negative_extras: photorealism, clean vector, glossy 3D, text
+    description: chalk drawing mascot, soft smudgy edges, hand-drawn chalkboard or
+      pastel surface

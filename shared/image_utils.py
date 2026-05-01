@@ -7,7 +7,7 @@ from io import BytesIO
 from pathlib import Path
 from xml.etree import ElementTree
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from shared.errors import InputError
 
@@ -249,6 +249,7 @@ def compose_grid(
     *,
     columns: int = 3,
     cell_size: int = 256,
+    labels: Iterable[str] | None = None,
 ) -> Image.Image:
     """Compose a simple transparent preview grid."""
 
@@ -256,14 +257,29 @@ def compose_grid(
     if not image_list:
         raise InputError("Cannot compose a grid with no images")
 
+    label_list = list(labels or [])
+    label_height = 28 if label_list else 0
     rows = (len(image_list) + columns - 1) // columns
-    canvas = Image.new("RGBA", (columns * cell_size, rows * cell_size), (0, 0, 0, 0))
+    canvas = Image.new(
+        "RGBA",
+        (columns * cell_size, rows * (cell_size + label_height)),
+        (0, 0, 0, 0),
+    )
+    draw = ImageDraw.Draw(canvas)
+    font = ImageFont.load_default()
     for index, image in enumerate(image_list):
         thumb = pad_square(ensure_alpha(image))
         thumb.thumbnail((cell_size, cell_size), Image.Resampling.LANCZOS)
         x = (index % columns) * cell_size + (cell_size - thumb.width) // 2
-        y = (index // columns) * cell_size + (cell_size - thumb.height) // 2
+        row_top = (index // columns) * (cell_size + label_height)
+        y = row_top + (cell_size - thumb.height) // 2
         canvas.alpha_composite(thumb, (x, y))
+        if index < len(label_list):
+            text = label_list[index]
+            bbox = draw.textbbox((0, 0), text, font=font)
+            text_width = bbox[2] - bbox[0]
+            text_x = (index % columns) * cell_size + max(0, (cell_size - text_width) // 2)
+            draw.text((text_x, row_top + cell_size + 6), text, fill=(20, 20, 20, 255), font=font)
     return canvas
 
 

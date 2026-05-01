@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 07 implemented**. `icon-creator` v0.3 supports presets, reference images, multi-variant generation, quality validation, and refinement. `app-icon-pack` supports iOS, Android, Web, macOS, watchOS, and Windows asset packs. `png-to-svg` supports SVG vectorization with local algorithm selection.
+> Status: **Phase 11 implemented**. `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, and `mascot-creator` v0.4 are implemented. Mascots now support master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`.
 
 ---
 
@@ -13,7 +13,7 @@ You write a description, optionally drop a reference image, and get back:
 - A polished icon or mascot generated through OpenRouter
 - A vectorized SVG (when the input is suitable)
 - A ready-to-ship asset pack: iOS `AppIcon.appiconset/`, Android `mipmap-*/` + adaptive icons, Web favicons + manifest, macOS, watchOS, Windows tiles
-- For mascots: pose variants, expression variants, character sheet, social/sticker/print packs
+- For mascots: master image, pose variants, expression variants, outfit variants, character sheet, pose-expression matrix, and `style-guide.md`
 
 All driven by a Python skill triggered through your agent of choice.
 
@@ -72,7 +72,7 @@ icon-creator-skills/
 
 ```
 
-Planned later shared modules such as `consistency_checker` are still phase-gated.
+Later skills such as `mascot-pack` and `icon-set-creator` are still phase-gated.
 
 ## Quick start
 
@@ -130,6 +130,21 @@ python skills/png-to-svg/scripts/vectorize.py \
 ```
 
 No OpenRouter call is made for app-icon packaging or SVG vectorization.
+
+Generate a mascot package:
+
+```bash
+python skills/mascot-creator/scripts/generate.py \
+  --description "wise old owl, professor, glasses" \
+  --type stylized \
+  --preset 3d-toon \
+  --views front,side,3-quarter,back \
+  --poses idle,waving,thinking \
+  --expressions happy,surprised \
+  --outfits casual,formal
+```
+
+For a cheap live smoke test, use `--variants 1 --best-of-n 1`.
 
 ---
 

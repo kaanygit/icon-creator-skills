@@ -1,0 +1,7 @@
+{% extends "mascot-creator/_default.j2" %}
+{% block positive %}
+same locked mascot character as the reference, {{ anchor_text }}, chalk drawing mascot, soft smudgy edges, hand-drawn chalkboard or pastel surface, {{ view }} view, neutral expression, neutral standing pose, preserve palette, proportions, accessories, face design, and silhouette, single character, no text
+{%- if personality %}, personality: {{ personality }}{% endif %}
+{%- if colors %}, preferred palette: {{ colors | join(", ") }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}

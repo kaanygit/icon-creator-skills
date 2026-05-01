@@ -1,0 +1,7 @@
+{% extends "mascot-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, 3D toon style, Pixar-like, soft shading, rounded forms, friendly character render, original mascot master design, neutral front-facing presentation, full character visible, clean centered composition, transparent or simple clean background, no text, no watermark
+{%- if personality %}, personality: {{ personality }}{% endif %}
+{%- if colors %}, preferred palette: {{ colors | join(", ") }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}
