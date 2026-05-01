@@ -18,13 +18,16 @@ python skills/icon-creator/scripts/generate.py --description "<user's descriptio
 Optional arguments:
 
 - `--output-dir <path>`: output root, default `output`
-- `--model <openrouter-model-id>`: model override, default `google/gemini-3.1-flash-image-preview`
+- `--model <openrouter-model-id>`: model override, default `sourceful/riverflow-v2-fast-preview`
 - `--style-preset <preset>`: one of `flat`, `gradient`, `glass-morphism`, `outline`, `3d-isometric`, `skeuomorphic`, `neumorphic`, `material`, `ios-style`
 - `--colors <hex,hex>`: comma-separated palette to steer the output
 - `--reference-image <path>`: PNG/JPG reference used for palette and style hints
+- `--variants <n>`: number of candidates to generate and validate, default `3`, supported range `1-6`
+- `--seed <n>`: optional base seed; variants use incrementing seeds when the provider supports it
+- `--refine <path>`: previous `master.png` or variant to use as an image reference for iteration
 
-The script prints the path to the generated `master.png` on the last line of stdout.
+The script prints the path to the selected `master.png` on the last line of stdout. Each run also writes `preview.png`, all candidate files in `variants/`, and validation results in `metadata.json`.
 
-## Phase 02 limits
+## Phase 03 limits
 
-This version is still single-shot. It supports style presets and reference-image hints, but no variants, quality validator, packaging, or vectorization.
+This version supports multi-shot icon generation, auto-pick validation, style presets, reference-image hints, and refinement. It does not yet package platform icon assets or vectorize to SVG.

@@ -34,7 +34,7 @@ Official references:
 
 - OpenRouter image generation docs: `https://openrouter.ai/docs/guides/overview/multimodal/image-generation`
 - OpenRouter model list API: `https://openrouter.ai/api/v1/models?output_modalities=image`
-- Gemini image model page: `https://openrouter.ai/google/gemini-3.1-flash-image-preview`
+- Sourceful Riverflow image model page: `https://openrouter.ai/sourceful/riverflow-v2-fast-preview`
 - Black Forest Labs provider page: `https://openrouter.ai/black-forest-labs`
 
 ## Model cleanup rules

@@ -59,7 +59,7 @@ No presets, no variants, no validation, no retries beyond the transport-level re
    - argparse for inputs
    - Basic prompt assembly (hardcoded template, no Jinja yet)
    - Slug from description (hyphenated, ≤30 chars)
-   - Call `openrouter_client.generate(model="google/gemini-3.1-flash-image-preview", prompt=..., n=1)`
+   - Call `openrouter_client.generate(model="sourceful/riverflow-v2-fast-preview", prompt=..., n=1)`
    - Save image, write metadata.json, print master path
 4. Add a smoke test in `skills/icon-creator/tests/`
 5. Manually test in Claude Code

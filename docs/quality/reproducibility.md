@@ -24,7 +24,7 @@ Every run writes a `metadata.json` to its output directory:
   },
 
   "model": {
-    "id": "google/gemini-3.1-flash-image-preview",
+    "id": "sourceful/riverflow-v2-fast-preview",
     "fallback_used": false,
     "fallback_chain": ["black-forest-labs/flux.2-pro"]
   },

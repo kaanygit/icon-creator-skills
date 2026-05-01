@@ -1,14 +1,14 @@
 models:
-  google/gemini-3.1-flash-image-preview:
+  sourceful/riverflow-v2-fast-preview:
     status: selected
-    provider: google
-    output_modalities: [text, image]
-    default_modalities: [image, text]
+    provider: sourceful
+    output_modalities: [image]
+    default_modalities: [image]
     supports_text_to_image: true
     supports_image_input: true
     supports_image_edit: true
-    pricing_basis: tokens
-    notes: "Default general-purpose image model for icon generation."
+    pricing_basis: image
+    notes: "Default fast image model for icon generation. OpenRouter lists a 4.5MB request limit for Sourceful image inputs."
 
   black-forest-labs/flux.2-pro:
     status: selected

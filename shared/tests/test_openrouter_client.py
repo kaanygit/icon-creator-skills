@@ -47,7 +47,7 @@ def test_generate_parses_openrouter_image_response(
     client = OpenRouterClient(api_key="test-key", session=session)
 
     result = client.generate(
-        model="google/gemini-3.1-flash-image-preview",
+        model="sourceful/riverflow-v2-fast-preview",
         prompt="fox",
         n=1,
         skill="test",
@@ -55,10 +55,10 @@ def test_generate_parses_openrouter_image_response(
 
     assert len(result.images) == 1
     assert result.images[0].size == (2, 2)
-    assert result.model_used == "google/gemini-3.1-flash-image-preview"
-    assert result.cost_usd is None
+    assert result.model_used == "sourceful/riverflow-v2-fast-preview"
+    assert result.cost_usd == 0.03
     payload = session.posts[0]["json"]
-    assert payload["modalities"] == ["image", "text"]
+    assert payload["modalities"] == ["image"]
     assert payload["messages"][0]["content"] == "fox"
 
 
@@ -69,12 +69,12 @@ def test_retired_model_falls_back(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
 
     result = client.generate(
         model="openai/dall-e-3",
-        fallback_models=["google/gemini-3.1-flash-image-preview"],
+        fallback_models=["sourceful/riverflow-v2-fast-preview"],
         prompt="fox",
     )
 
     assert result.fallback_used is True
-    assert result.model_used == "google/gemini-3.1-flash-image-preview"
+    assert result.model_used == "sourceful/riverflow-v2-fast-preview"
 
 
 def test_missing_images_raises(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -83,7 +83,7 @@ def test_missing_images_raises(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) 
     client = OpenRouterClient(api_key="test-key", session=session)
 
     with pytest.raises(OpenRouterError, match="did not include any images"):
-        client.generate(model="google/gemini-3.1-flash-image-preview", prompt="fox")
+        client.generate(model="sourceful/riverflow-v2-fast-preview", prompt="fox")
 
 
 def _image_response() -> dict[str, Any]:

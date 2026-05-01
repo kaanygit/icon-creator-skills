@@ -64,7 +64,7 @@ If `package` was set, also produces an `app-icon-pack`-style asset directory and
     "seed": 42
   },
   "model": {
-    "id": "google/gemini-3.1-flash-image-preview",
+    "id": "sourceful/riverflow-v2-fast-preview",
     "fallback_used": false
   },
   "prompt": {
@@ -110,15 +110,15 @@ Preset-to-model mapping lives in `shared/presets/icon-styles.yaml`. Defaults:
 
 | Preset | Primary model | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `gradient` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `glass-morphism` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `outline` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `3d-isometric` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `skeuomorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `neumorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `material` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `ios-style` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `flat` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `outline` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `skeuomorphic` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `neumorphic` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `material` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
 
 ## Prompt template (sketch)
 

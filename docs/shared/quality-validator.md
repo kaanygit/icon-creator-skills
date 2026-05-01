@@ -47,8 +47,8 @@ Different skill outputs need different validators. A profile selects the relevan
 ```yaml
 profiles:
   app-icon:
-    required: [transparent_bg, square_aspect, centered, readable_at_16px, contrast, non_empty]
-    optional: [no_text_artifacts]
+    required: [square_aspect, centered, readable_at_16px, contrast, non_empty]
+    optional: [transparent_bg, no_text_artifacts]
   ui-icon:
     required: [transparent_bg, square_aspect, centered, readable_at_16px, non_empty]
     optional: [contrast, no_text_artifacts]

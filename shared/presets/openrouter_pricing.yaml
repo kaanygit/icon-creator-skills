@@ -1,8 +1,7 @@
 models:
-  google/gemini-3.1-flash-image-preview:
-    input_per_million_tokens_usd: 0.50
-    output_per_million_tokens_usd: 3.00
-    notes: "OpenRouter listed rate as of 2026-05-01."
+  sourceful/riverflow-v2-fast-preview:
+    per_image_usd: 0.03
+    notes: "OpenRouter listed rate as of 2026-05-01; preview pricing."
 
   black-forest-labs/flux.2-pro:
     per_image_usd: 0.04

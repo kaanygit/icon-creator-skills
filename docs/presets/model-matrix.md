@@ -12,7 +12,7 @@ Status values:
 
 | Model ID | Status | Intended use | Capability notes |
 |---|---|---|---|
-| `google/gemini-3.1-flash-image-preview` | selected | Default cost-efficient image model for icons and mascot masters | Supports image input and image output on OpenRouter. Use `modalities: ["image", "text"]`. |
+| `sourceful/riverflow-v2-fast-preview` | selected | Default fast image model for icons and mascot masters | Image-only OpenRouter output model. Supports text-to-image and image-to-image; OpenRouter lists pricing at `$0.03` per output image and a 4.5MB request limit for Sourceful image inputs. |
 | `black-forest-labs/flux.2-pro` | selected | High-quality icon styles, 3D, glass, mascot consistency, image editing/reference-heavy flows | Current Black Forest Labs image model family on OpenRouter. Evaluate for both text-to-image and editing. |
 | `black-forest-labs/flux.2-flex` | candidate | Fine-detail, typography-sensitive, and multi-reference editing tests | Promising for reference-heavy workflows; keep as candidate until Phase 02/09 tests prove value. |
 
@@ -31,15 +31,15 @@ This is the starting point for `shared/presets/icon_styles.yaml` in Phase 00/02.
 
 | Preset | Primary | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `gradient` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `glass-morphism` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `outline` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `3d-isometric` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `skeuomorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `neumorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `material` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
-| `ios-style` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `flat` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `outline` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `skeuomorphic` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `neumorphic` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `material` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `sourceful/riverflow-v2-fast-preview` | `black-forest-labs/flux.2-pro` |
 
 ## Phase 00 YAML target
 
@@ -47,16 +47,16 @@ Phase 00 should create `shared/presets/openrouter_models.yaml` with this shape:
 
 ```yaml
 models:
-  google/gemini-3.1-flash-image-preview:
+  sourceful/riverflow-v2-fast-preview:
     status: selected
-    provider: google
-    output_modalities: [text, image]
-    default_modalities: [image, text]
+    provider: sourceful
+    output_modalities: [image]
+    default_modalities: [image]
     supports_text_to_image: true
     supports_image_input: true
     supports_image_edit: true
-    pricing_basis: tokens
-    notes: "Token-priced model; use response usage when available."
+    pricing_basis: image
+    notes: "OpenRouter listed preview image model; $0.03/output image as of 2026-05-01."
 
   black-forest-labs/flux.2-pro:
     status: selected

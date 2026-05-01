@@ -75,15 +75,15 @@ logging:
 
 ```yaml
 models:
-  google/gemini-3.1-flash-image-preview:
+  sourceful/riverflow-v2-fast-preview:
     status: selected
-    provider: google
-    output_modalities: [text, image]
-    default_modalities: [image, text]
+    provider: sourceful
+    output_modalities: [image]
+    default_modalities: [image]
     supports_text_to_image: true
     supports_image_input: true
     supports_image_edit: true
-    pricing_basis: tokens
+    pricing_basis: image
 ```
 
 Phase 00 should also include retired/unavailable model IDs as explicit `status: retired` entries so future agents do not reintroduce them as fallbacks.

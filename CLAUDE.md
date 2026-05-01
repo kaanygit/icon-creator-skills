@@ -13,9 +13,9 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 01 implemented. Shared infrastructure and `icon-creator` v0.1 exist.**
+**Phase 03 implemented. Shared infrastructure and `icon-creator` v0.3 exist.**
 
-This repo now includes the Phase 00 Python package skeleton under `shared/`, plus the first user-facing skill under `skills/icon-creator/`. Later skill folders are still phase-gated.
+This repo now includes shared infrastructure under `shared/`, plus the first user-facing skill under `skills/icon-creator/`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. Later skill folders are still phase-gated.
 
 Current / target layout:
 

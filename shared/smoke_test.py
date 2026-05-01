@@ -15,7 +15,7 @@ from shared.openrouter_client import OpenRouterClient
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate a single smoke-test image.")
     parser.add_argument("description")
-    parser.add_argument("--model", default="google/gemini-3.1-flash-image-preview")
+    parser.add_argument("--model", default="sourceful/riverflow-v2-fast-preview")
     parser.add_argument("--output-dir", default="output")
     args = parser.parse_args()
 

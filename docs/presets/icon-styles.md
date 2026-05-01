@@ -29,7 +29,7 @@ Modern flat illustration. Solid colors, no gradients, no shadows. The 2010s+ def
 **Style phrase**: "flat-style icon, solid colors, no gradients, simple geometry"
 **Negative**: "gradient, shadow, depth, 3d, photorealistic"
 **Best for**: app icons, UI icons, favicons, logo-marks
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `gradient`
 
@@ -38,7 +38,7 @@ Smooth color gradients on otherwise flat shapes. Common in modern app icons (Ins
 **Style phrase**: "smooth color gradient, modern app icon style, vibrant"
 **Negative**: "flat solid colors, photorealistic, harsh"
 **Best for**: app icons, brand-mark icons
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `glass-morphism`
 
@@ -47,7 +47,7 @@ Frosted-glass / translucent panel look. Apple-style "liquid glass," translucent 
 **Style phrase**: "glass morphism, frosted blur, translucent layers, soft highlights"
 **Negative**: "opaque, flat, vector-only"
 **Best for**: app icons (especially iOS / macOS), modern UI icons
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `outline`
 
@@ -56,7 +56,7 @@ Line-art icons. Single stroke weight, no fills. "Hero Icons" or "Lucide" style.
 **Style phrase**: "outline icon, single stroke weight, no fill, line art"
 **Negative**: "filled, solid, gradient, shadow"
 **Best for**: UI icons (especially in icon sets), favicons in some brand systems
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `3d-isometric`
 
@@ -65,7 +65,7 @@ Isometric 3D-look icons (30° angle). Modern fintech / SaaS site illustration st
 **Style phrase**: "isometric 3D icon, 30 degree projection, soft shadows, geometric"
 **Negative**: "flat 2d, photorealistic perspective"
 **Best for**: feature-set icons on marketing sites, brand-mark icons with depth
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `skeuomorphic`
 
@@ -74,7 +74,7 @@ Physical-object look. Real materials, depth, shadows. Pre-iOS-7 Apple style.
 **Style phrase**: "skeuomorphic, photorealistic materials, leather or metal texture, deep shadows, embossed"
 **Negative**: "flat, abstract, vector"
 **Best for**: niche use (retro feel, physical-tool brand metaphors)
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `neumorphic`
 
@@ -83,7 +83,7 @@ Soft-UI / "Neumorphism." Subtle inner and outer shadows on monochromatic backgro
 **Style phrase**: "neumorphic, soft inner and outer shadows, monochromatic, subtle depth"
 **Negative**: "high contrast, vivid colors, flat"
 **Best for**: minimal UI icon sets, dashboard widgets
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `material`
 
@@ -92,7 +92,7 @@ Google Material Design icon style. Round corners, dual-tone, balanced negative s
 **Style phrase**: "Google Material Design icon, dual-tone, balanced, rounded corners"
 **Negative**: "ornate, photorealistic, hand-drawn"
 **Best for**: Android app icons, web apps targeting Material aesthetic
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ### `ios-style`
 
@@ -101,7 +101,7 @@ Apple iOS app-icon style. Squircle implied (rendered in `app-icon-pack`), simple
 **Style phrase**: "iOS app icon style, polished, single subject on solid or gradient background"
 **Negative**: "outlined, line art, busy"
 **Best for**: iOS app icons
-**Models**: primary `google/gemini-3.1-flash-image-preview`, fallback `black-forest-labs/flux.2-pro`
+**Models**: primary `sourceful/riverflow-v2-fast-preview`, fallback `black-forest-labs/flux.2-pro`
 
 ## Adding a new preset
 

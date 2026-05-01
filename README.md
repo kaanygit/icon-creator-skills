@@ -2,7 +2,7 @@
 
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 01 implemented**. Shared Python infrastructure and `icon-creator` v0.1 exist; later skills are still planned.
+> Status: **Phase 03 implemented**. `icon-creator` v0.3 supports presets, reference images, multi-variant generation, quality validation, and refinement. Packaging/vectorization skills are still planned.
 
 ---
 
@@ -50,9 +50,12 @@ icon-creator-skills/
 │   ├── platforms/                # asset size tables per platform (7 files)
 │   ├── quality/                  # cross-cutting quality features (5 files)
 │   └── phases/                   # phased build plan + acceptance records
-├── shared/                       # Phase 00 shared Python package
+├── shared/                       # Shared Python package
 │   ├── openrouter_client.py
 │   ├── image_utils.py
+│   ├── prompt_builder.py
+│   ├── quality_validator.py
+│   ├── vision_analyzer.py
 │   ├── config.py
 │   ├── errors.py
 │   ├── logging_setup.py
@@ -69,7 +72,43 @@ icon-creator-skills/
 
 ```
 
-Planned later shared modules (`vision_analyzer`, `prompt_builder`, `consistency_checker`, `quality_validator`) are still phase-gated and intentionally not implemented in Phase 00.
+Planned later shared modules such as `consistency_checker` are still phase-gated.
+
+## Quick start
+
+```bash
+export OPENROUTER_API_KEY="..."
+
+python skills/icon-creator/scripts/generate.py \
+  --description "minimal fox app icon" \
+  --style-preset gradient \
+  --variants 3 \
+  --seed 42
+```
+
+The final stdout line is the selected `master.png`. Each run writes:
+
+```text
+output/{slug}-{timestamp}/
+├── master.png
+├── preview.png
+├── variants/
+│   ├── 1.png
+│   ├── 2.png
+│   └── 3.png
+├── metadata.json
+├── prompt-debug.txt
+└── logs/openrouter.log
+```
+
+Refine a previous result:
+
+```bash
+python skills/icon-creator/scripts/generate.py \
+  --refine output/minimal-fox-app-icon-{timestamp}/master.png \
+  --description "more geometric" \
+  --variants 2
+```
 
 ---
 
