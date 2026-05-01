@@ -31,6 +31,7 @@ from shared.logging_setup import get_run_logger  # noqa: E402
 from shared.openrouter_client import OpenRouterClient  # noqa: E402
 from shared.prompt_builder import PromptBuilder  # noqa: E402
 from shared.quality_validator import QualityValidator  # noqa: E402
+from shared.style_memory import load_style  # noqa: E402
 from shared.vision_analyzer import IconSetStyleGuide, VisionAnalyzer  # noqa: E402
 
 MASTER_SIZE = 1024
@@ -77,6 +78,7 @@ def generate_icon_set(
     style_preset: str,
     colors: list[str] | None = None,
     reference_icon: str | Path | None = None,
+    style: str | None = None,
     set_name: str | None = None,
     stroke_width: str | None = None,
     corner_radius: str | None = None,
@@ -97,6 +99,8 @@ def generate_icon_set(
         raise InputError("icons list cannot be empty")
     if best_of_n < 1 or best_of_n > 6:
         raise InputError("--best-of-n must be between 1 and 6")
+    if style and not reference_icon:
+        reference_icon = load_style(style).path / "style-anchor.png"
 
     builder = prompt_builder or PromptBuilder()
     analyzer = vision_analyzer or VisionAnalyzer()
@@ -205,6 +209,7 @@ def generate_icon_set(
         records=records,
         total_cost=total_cost,
         reference_icon=reference_icon,
+        style=style,
     )
     return IconSetRun(
         run_dir=run_dir,
@@ -388,6 +393,7 @@ def _write_metadata(
     records: list[IconRecord],
     total_cost: float | None,
     reference_icon: str | Path | None,
+    style: str | None,
 ) -> Path:
     data = {
         "skill": "icon-set-creator",
@@ -396,6 +402,7 @@ def _write_metadata(
         "subjects": subjects,
         "anchor_subject": anchor_subject,
         "reference_icon": str(reference_icon) if reference_icon else None,
+        "style": style,
         "style_preset": style_preset,
         "colors": colors,
         "style_guide": style_guide.to_dict(),
@@ -445,6 +452,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--style-preset", required=True, help="Icon style preset")
     parser.add_argument("--colors", default=None, help="Comma-separated hex colors")
     parser.add_argument("--reference-icon", default=None, help="Existing anchor icon")
+    parser.add_argument("--style", default=None, help="Saved style name from icon-skills styles")
     parser.add_argument("--set-name", default=None, help="Output set name")
     parser.add_argument("--stroke-width", default=None, help="thin|regular|bold")
     parser.add_argument("--corner-radius", default=None, help="sharp|rounded|pill")
@@ -463,6 +471,7 @@ def main() -> int:
         style_preset=args.style_preset,
         colors=parse_colors(args.colors),
         reference_icon=args.reference_icon,
+        style=args.style,
         set_name=args.set_name,
         stroke_width=args.stroke_width,
         corner_radius=args.corner_radius,

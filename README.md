@@ -1,8 +1,97 @@
 # icon-creator-skills
 
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-black.svg)](CHANGELOG.md)
+
 Open-source agent skills toolkit for **icon and mascot generation** with multi-platform asset packaging. Built on OpenRouter image models, designed to drop into Claude Code, OpenCode, and any agent harness that supports the skill format.
 
-> Status: **Phase 13 implemented**. `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, `mascot-creator` v0.4, `mascot-pack` v1.0, and `icon-set-creator` v1.0 are implemented.
+> Status: **v1.0.0 release candidate**. All planned phases are implemented in the repo. Publishing to PyPI / marketplace directories is intentionally manual.
+
+---
+
+## Example outputs
+
+These are real outputs from this repo's local `output/` runs, committed as small README examples.
+
+### Icon prompt
+
+Prompt:
+
+```text
+geometric fox app icon
+```
+
+Command:
+
+```bash
+python skills/icon-creator/scripts/generate.py \
+  --description "geometric fox app icon" \
+  --style-preset gradient \
+  --variants 3 \
+  --seed 42
+```
+
+Output:
+
+![Geometric fox app icon](docs/assets/examples/icon-geometric-fox-master.png)
+
+Variant preview:
+
+![Geometric fox app icon variants](docs/assets/examples/icon-geometric-fox-preview.png)
+
+Result files:
+
+- `master.png`
+- `preview.png`
+- `variants/1.png`, `variants/2.png`, `variants/3.png`
+- `metadata.json`
+- `prompt-debug.txt`
+
+### Mascot prompt
+
+Prompt:
+
+```text
+friendly fox explorer mascot
+```
+
+Command:
+
+```bash
+python skills/mascot-creator/scripts/generate.py \
+  --description "friendly fox explorer mascot" \
+  --type stylized \
+  --preset cartoon-2d \
+  --personality "curious and helpful" \
+  --variants 1 \
+  --best-of-n 1
+```
+
+Output:
+
+![Friendly fox explorer mascot](docs/assets/examples/mascot-fox-master.png)
+
+Result files:
+
+- `master.png`
+- `variants/1.png`
+- `style-guide.md`
+- `metadata.json`
+
+### PNG to SVG example
+
+Command:
+
+```bash
+python skills/png-to-svg/scripts/vectorize.py \
+  --input output/geometric-fox-app-icon-20260501-101843/master.png \
+  --algorithm auto
+```
+
+Comparison output:
+
+![PNG to SVG comparison](docs/assets/examples/png-to-svg-comparison.png)
 
 ---
 
@@ -133,6 +222,47 @@ When a generation skill runs, it checks keys in this order:
 
 The key value is not written to `metadata.json`, logs, prompts, or generated outputs.
 
+## Brand kit setup
+
+Create `.iconrc.json` in a project root to avoid repeating brand defaults:
+
+```json
+{
+  "brand": {
+    "name": "Acme",
+    "colors": ["#2563EB", "#1E40AF"]
+  },
+  "defaults": {
+    "icon_style_preset": "flat",
+    "mascot_type": "stylized",
+    "mascot_preset": "cartoon-2d"
+  }
+}
+```
+
+The loader discovers `.iconrc.json` upward from the current directory and merges it after
+`~/.icon-skills/config.yaml`.
+
+## Save and reuse styles
+
+```bash
+icon-skills styles save --from output/geometric-fox-app-icon-20260501-101843 --name brand-flat
+icon-skills styles list
+icon-skills styles show brand-flat
+```
+
+Saved styles live in `~/.icon-skills/styles/`.
+
+## Doctor and cost summary
+
+```bash
+icon-skills doctor
+icon-skills cost
+```
+
+`doctor` checks Python, required Python packages, optional native/vector dependencies, and
+OpenRouter key configuration without printing the key.
+
 The final stdout line is the selected `master.png`. Each run writes:
 
 ```text
@@ -216,6 +346,12 @@ python skills/icon-set-creator/scripts/generate_set.py \
 ## Where to start reading
 
 If you want the **30-second pitch**: [docs/vision.md](docs/vision.md)
+
+If you want to **install and run it**: [docs/install.md](docs/install.md) → [docs/getting-started.md](docs/getting-started.md).
+
+If something fails: [docs/troubleshooting.md](docs/troubleshooting.md).
+
+If you want copy-paste workflows: [docs/recipes.md](docs/recipes.md).
 
 If you want the **whole picture**: read in order — [vision](docs/vision.md) → [architecture](docs/architecture.md) → [phases overview](docs/phases/README.md).
 

@@ -18,6 +18,7 @@ from shared.logging_setup import get_run_logger
 from shared.openrouter_client import OpenRouterClient
 from shared.prompt_builder import PromptBuilder
 from shared.quality_validator import QualityValidator
+from shared.style_memory import load_style
 from shared.vision_analyzer import StyleHints, VisionAnalyzer
 
 DEFAULT_MODEL = "sourceful/riverflow-v2-fast-preview"
@@ -55,6 +56,7 @@ def generate_icon(
     style_preset: str = DEFAULT_STYLE_PRESET,
     colors: list[str] | None = None,
     reference_image: str | Path | None = None,
+    style: str | None = None,
     variants: int = 3,
     seed: int | None = None,
     refine: str | Path | None = None,
@@ -68,6 +70,8 @@ def generate_icon(
         raise InputError("--variants must be between 1 and 6")
 
     refine_path = Path(refine) if refine else None
+    if style and not reference_image:
+        reference_image = load_style(style).path / "style-anchor.png"
     base_description, refinement_of = _resolve_description(description, refine_path)
     reference_hints = _analyze_reference(reference_image, vision_analyzer)
     builder = prompt_builder or PromptBuilder()
@@ -164,6 +168,7 @@ def generate_icon(
             "style-preset": style_preset,
             "colors": colors or [],
             "reference-image": str(reference_image) if reference_image else None,
+            "style": style,
             "model": model,
             "variants": variants,
             "seed": seed,
@@ -273,6 +278,7 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated color palette, e.g. '#FF5733,#1A1A1A'",
     )
     parser.add_argument("--reference-image", default=None, help="Reference PNG/JPG path")
+    parser.add_argument("--style", default=None, help="Saved style name from icon-skills styles")
     parser.add_argument(
         "--variants",
         type=int,
@@ -293,6 +299,7 @@ def main() -> int:
         style_preset=args.style_preset,
         colors=parse_colors(args.colors),
         reference_image=args.reference_image,
+        style=args.style,
         variants=args.variants,
         seed=args.seed,
         refine=args.refine,

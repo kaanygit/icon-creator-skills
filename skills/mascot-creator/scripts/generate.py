@@ -20,6 +20,7 @@ from shared.logging_setup import get_run_logger
 from shared.openrouter_client import OpenRouterClient
 from shared.prompt_builder import PromptBuilder
 from shared.quality_validator import QualityValidator
+from shared.style_memory import load_style
 from shared.vision_analyzer import CharacterTraits, VisionAnalyzer
 
 DEFAULT_FALLBACK_MODELS = ["sourceful/riverflow-v2-fast-preview"]
@@ -86,6 +87,7 @@ def generate_mascot(
     best_of_n: int = 3,
     consistency_threshold: float = 0.85,
     reference_image: str | Path | None = None,
+    style: str | None = None,
     mascot_name: str | None = None,
     client: ImageClient | None = None,
     prompt_builder: PromptBuilder | None = None,
@@ -119,6 +121,8 @@ def generate_mascot(
     outfit_names = _parse_or_default(outfits, [])
     if matrix and (not pose_names or not expression_names):
         raise InputError("--matrix requires both --poses and --expressions")
+    if style and not reference_image:
+        reference_image = load_style(style).path / "style-anchor.png"
 
     builder = prompt_builder or PromptBuilder()
     analyzer = vision_analyzer or VisionAnalyzer()
@@ -337,6 +341,7 @@ def generate_mascot(
             "best_of_n": best_of_n,
             "consistency_threshold": consistency_threshold,
             "reference_image": str(reference_image) if reference_image else None,
+            "style": style,
         },
         "model": {
             "id": getattr(result, "model_used", master_prompt.model_recommendation),
@@ -689,6 +694,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--best-of-n", type=int, default=3, help="Attempts per variant")
     parser.add_argument("--consistency-threshold", type=float, default=0.85)
     parser.add_argument("--reference-image", default=None, help="Optional reference image")
+    parser.add_argument("--style", default=None, help="Saved style name from icon-skills styles")
     parser.add_argument("--mascot-name", default=None, help="Output naming override")
     return parser.parse_args()
 
@@ -712,6 +718,7 @@ def main() -> int:
         best_of_n=args.best_of_n,
         consistency_threshold=args.consistency_threshold,
         reference_image=args.reference_image,
+        style=args.style,
         mascot_name=args.mascot_name,
     )
     print(run.run_dir)

@@ -13,9 +13,9 @@ Context file for any Claude Code / AI agent session working in this repo. Read t
 
 ## Current status
 
-**Phase 13 implemented. Shared infrastructure, `icon-creator` v0.3, `app-icon-pack` v1.1, `png-to-svg` v0.2, `mascot-creator` v0.4, `mascot-pack` v1.0, and `icon-set-creator` v1.0 exist.**
+**All planned phases implemented. This repo is at v1.0.0 release-candidate status.**
 
-This repo now includes shared infrastructure under `shared/`, `icon-creator`, `app-icon-pack`, `png-to-svg`, `mascot-creator`, `mascot-pack`, and `icon-set-creator`. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. `mascot-creator` supports master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`. `mascot-pack` packages mascot outputs for social, stickers, print, and web. `icon-set-creator` generates coherent icon families. Later work is cross-skill hardening, polish, docs, and release.
+This repo now includes shared infrastructure under `shared/`, all six planned skills, and the `icon-skills` utility CLI. `icon-creator` supports presets, reference images, multi-variant output, validator auto-pick, preview grids, and refinement. `app-icon-pack` converts a PNG master into iOS, Android, Web, macOS, watchOS, and Windows assets. `png-to-svg` vectorizes PNG/JPG inputs locally with suitability analysis and algorithm selection. `mascot-creator` supports master generation, multi-view sheets, pose variants, expression variants, outfit variants, matrix output, and `style-guide.md`. `mascot-pack` packages mascot outputs for social, stickers, print, and web. `icon-set-creator` generates coherent icon families. Cross-skill support includes `.iconrc.json`, style memory, replay, doctor, cost summary, and docs.
 
 Current / target layout:
 
