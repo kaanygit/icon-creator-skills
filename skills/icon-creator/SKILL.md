@@ -18,11 +18,13 @@ python skills/icon-creator/scripts/generate.py --description "<user's descriptio
 Optional arguments:
 
 - `--output-dir <path>`: output root, default `output`
-- `--model <openrouter-model-id>`: model override, default `google/gemini-3-pro-image-preview`
+- `--model <openrouter-model-id>`: model override, default `google/gemini-3.1-flash-image-preview`
+- `--style-preset <preset>`: one of `flat`, `gradient`, `glass-morphism`, `outline`, `3d-isometric`, `skeuomorphic`, `neumorphic`, `material`, `ios-style`
+- `--colors <hex,hex>`: comma-separated palette to steer the output
+- `--reference-image <path>`: PNG/JPG reference used for palette and style hints
 
 The script prints the path to the generated `master.png` on the last line of stdout.
 
-## Phase 01 limits
+## Phase 02 limits
 
-This version is intentionally simple: single-shot generation, no style presets, no reference image, no validation, no variants, no packaging, no vectorization.
-
+This version is still single-shot. It supports style presets and reference-image hints, but no variants, quality validator, packaging, or vectorization.

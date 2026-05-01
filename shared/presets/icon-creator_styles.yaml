@@ -1,0 +1,73 @@
+icon-creator:
+  flat:
+    template: flat.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "flat-style icon, solid colors, no gradients, simple geometry"
+    negative_extras: "gradient, shadow, depth, 3d, photorealistic"
+    description: "Modern flat illustration"
+
+  gradient:
+    template: gradient.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "smooth color gradient, modern app icon style, vibrant"
+    negative_extras: "photorealistic, harsh lighting, clutter"
+    description: "Smooth modern gradients"
+
+  glass-morphism:
+    template: glass-morphism.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "glass morphism, frosted blur, translucent layers, soft highlights"
+    negative_extras: "opaque flat vector-only, harsh shadows, clutter"
+    description: "Modern glass / frosted-blur look"
+
+  outline:
+    template: outline.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "outline icon, single stroke weight, no fill, line art"
+    negative_extras: "filled, solid, gradient, shadow, 3d, photorealistic"
+    description: "Line-art icon"
+
+  3d-isometric:
+    template: 3d-isometric.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "isometric 3D icon, 30 degree projection, soft shadows, geometric"
+    negative_extras: "flat 2d, front-facing, photorealistic scene, busy background"
+    description: "Isometric 3D icon"
+
+  skeuomorphic:
+    template: skeuomorphic.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "skeuomorphic icon, realistic materials, tactile depth, polished highlights"
+    negative_extras: "flat, abstract, line art, low detail"
+    description: "Physical-object style"
+
+  neumorphic:
+    template: neumorphic.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "neumorphic soft UI icon, subtle inner and outer shadows, monochromatic depth"
+    negative_extras: "high contrast, harsh shadow, busy, photorealistic"
+    description: "Soft UI neumorphism"
+
+  material:
+    template: material.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "Google Material Design icon, dual-tone, balanced negative space, rounded corners"
+    negative_extras: "ornate, photorealistic, hand-drawn, busy"
+    description: "Material Design-inspired icon"
+
+  ios-style:
+    template: ios-style.j2
+    primary_model: google/gemini-3.1-flash-image-preview
+    fallback_models: [black-forest-labs/flux.2-pro]
+    style_phrase: "iOS app icon style, polished, single subject, soft color background"
+    negative_extras: "outlined only, busy, multiple subjects, text"
+    description: "Apple-style app icon"
+

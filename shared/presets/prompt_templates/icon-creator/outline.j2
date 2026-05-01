@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, outline icon, single consistent stroke weight,
+no fill, line art, geometric clarity, centered subject,
+transparent background, square 1:1 aspect ratio, even padding,
+no text, crisp vector-like stroke, readable at 16x16
+{%- if colors %}, stroke colors: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, match the reference line weight and palette: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

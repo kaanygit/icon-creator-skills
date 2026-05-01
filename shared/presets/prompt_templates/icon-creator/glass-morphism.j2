@@ -1,0 +1,9 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, glass morphism icon, frosted translucent layers,
+soft blur, subtle refraction, luminous highlights, modern Apple-like polish,
+centered subject, square app icon composition, even padding, no text
+{%- if colors %}, glass-tinted palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, use the reference palette and translucent feel: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

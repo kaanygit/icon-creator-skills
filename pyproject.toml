@@ -30,7 +30,7 @@ dev = [
 include = ["shared*"]
 
 [tool.setuptools.package-data]
-shared = ["presets/*.yaml"]
+shared = ["presets/*.yaml", "presets/prompt_templates/**/*.j2"]
 
 [tool.ruff]
 line-length = 100
@@ -38,4 +38,3 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
-

@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, Google Material Design icon, dual-tone,
+balanced negative space, rounded corners, simple geometric construction,
+centered subject, transparent background, square 1:1 aspect ratio,
+even padding, no text, clean Android-native visual language
+{%- if colors %}, Material palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, adapt the reference palette into Material Design: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

@@ -16,7 +16,7 @@
 - [x] `skills/icon-creator/scripts/generate.py` added.
 - [x] `skills/icon-creator/tests/test_generate.py` added.
 - [x] CLI supports `--description`, `--output-dir`, and `--model`.
-- [x] Default model updated to `google/gemini-3-pro-image-preview`.
+- [x] Default model updated to `google/gemini-3.1-flash-image-preview`.
 - [x] Basic Phase 01 prompt implemented without presets or Jinja.
 - [x] Generated output is normalized to `1024x1024` RGBA PNG.
 - [x] `metadata.json` and `prompt-debug.txt` are written.
@@ -40,7 +40,7 @@
 - [x] Unit test covers the CLI generation path with a fake OpenRouter client.
 - [x] Output file is verified as PNG, `1024x1024`, and `RGBA` in tests.
 - [x] Metadata required fields are verified in tests.
-- [x] Live OpenRouter generation run with `google/gemini-3-pro-image-preview`.
+- [x] Live OpenRouter generation run with `google/gemini-3.1-flash-image-preview`.
 - [x] Live output verified as PNG, `1024x1024`, and `RGBA`.
 - [x] Repo/output scan found no API key or bearer token written to files.
 

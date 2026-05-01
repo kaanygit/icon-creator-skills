@@ -1,0 +1,9 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, skeuomorphic app icon, realistic tactile materials,
+subtle texture, depth, highlights, polished shadows, physical-object feel,
+centered single subject, square composition, even padding, no text
+{%- if colors %}, material colors: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, follow the reference material and color cues: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

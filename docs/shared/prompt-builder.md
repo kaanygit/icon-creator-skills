@@ -32,7 +32,7 @@ result = pb.build(
 #   positive="...",
 #   negative="...",
 #   prompt_hash="abc123",
-#   model_recommendation="google/gemini-3-pro-image-preview",
+#   model_recommendation="google/gemini-3.1-flash-image-preview",
 #   model_fallbacks=["black-forest-labs/flux.2-pro"]
 # )
 
@@ -104,7 +104,7 @@ Each preset declares its template, model recommendation, and metadata in `shared
 icon-creator:
   flat:
     template: flat.j2
-    primary_model: google/gemini-3-pro-image-preview
+    primary_model: google/gemini-3.1-flash-image-preview
     fallback_models: [black-forest-labs/flux.2-pro]
     style_phrase: "flat-style icon, solid colors, no gradients"
     negative_extras: "gradient, shadow, depth"
@@ -112,7 +112,7 @@ icon-creator:
   glass-morphism:
     template: glass-morphism.j2
     primary_model: black-forest-labs/flux.2-pro
-    fallback_models: [google/gemini-3-pro-image-preview]
+    fallback_models: [google/gemini-3.1-flash-image-preview]
     style_phrase: "glass morphism, frosted blur, translucent"
     negative_extras: "opaque, flat, vector"
     description: "Modern glass / frosted-blur look"

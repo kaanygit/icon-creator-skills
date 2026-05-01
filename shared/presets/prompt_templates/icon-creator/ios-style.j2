@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, iOS app icon style, polished single subject,
+soft colorful background, subtle depth, rounded-square icon composition,
+centered subject, square 1:1 aspect ratio, generous padding, no text,
+premium Apple-like finish
+{%- if colors %}, iOS-style palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, use the reference colors and polish: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

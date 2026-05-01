@@ -1,0 +1,11 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, flat-style icon, solid colors, no gradients, simple geometry,
+centered subject, transparent background, square 1:1 aspect ratio,
+even padding, no text, no letters, clean vector-style edges,
+readable at 16x16, high contrast
+{%- if colors %}, color palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, match this reference palette and simplicity: {{ reference_hints.descriptor }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}
+

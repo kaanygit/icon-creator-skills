@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, isometric 3D icon, 30 degree projection,
+geometric forms, soft studio shadows, clean miniature object,
+centered subject, transparent background, square 1:1 aspect ratio,
+even padding, no text, high-quality render
+{%- if colors %}, material palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, use the reference colors while keeping isometric depth: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, neumorphic soft UI icon, subtle raised and inset forms,
+soft inner and outer shadows, low-contrast monochromatic depth,
+centered subject, square app icon composition, even padding, no text,
+clean minimal surface
+{%- if colors %}, soft UI palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, use the reference palette softly: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

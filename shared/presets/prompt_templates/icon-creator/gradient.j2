@@ -1,0 +1,10 @@
+{% extends "icon-creator/_default.j2" %}
+{% block positive %}
+{{ description }}, smooth vibrant gradient app icon, modern rounded shapes,
+centered subject, transparent background outside the icon silhouette,
+square 1:1 aspect ratio, even padding, no text, polished color transitions,
+clean edges, readable at small sizes
+{%- if colors %}, gradient palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, adapt the reference color mood: {{ reference_hints.descriptor }}{% endif %}
+{% endblock %}
+

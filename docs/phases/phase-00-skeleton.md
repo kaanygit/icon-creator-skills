@@ -75,7 +75,7 @@ logging:
 
 ```yaml
 models:
-  google/gemini-3-pro-image-preview:
+  google/gemini-3.1-flash-image-preview:
     status: selected
     provider: google
     output_modalities: [text, image]

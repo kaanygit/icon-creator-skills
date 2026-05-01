@@ -64,7 +64,7 @@ If `package` was set, also produces an `app-icon-pack`-style asset directory and
     "seed": 42
   },
   "model": {
-    "id": "google/gemini-3-pro-image-preview",
+    "id": "google/gemini-3.1-flash-image-preview",
     "fallback_used": false
   },
   "prompt": {
@@ -110,15 +110,15 @@ Preset-to-model mapping lives in `shared/presets/icon-styles.yaml`. Defaults:
 
 | Preset | Primary model | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
-| `gradient` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
-| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
-| `outline` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
-| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
-| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
-| `neumorphic` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
-| `material` | `google/gemini-3-pro-image-preview` | `black-forest-labs/flux.2-pro` |
-| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-3-pro-image-preview` |
+| `flat` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `outline` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `skeuomorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `neumorphic` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `material` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `google/gemini-3.1-flash-image-preview` | `black-forest-labs/flux.2-pro` |
 
 ## Prompt template (sketch)
 

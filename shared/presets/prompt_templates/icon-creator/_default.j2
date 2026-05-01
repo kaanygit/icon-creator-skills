@@ -1,0 +1,16 @@
+{% block positive %}
+{{ description }}, {{ style_phrase }},
+centered subject, transparent background, square 1:1 aspect ratio,
+even padding, no text, no letters, optimized for app icon use,
+high contrast, clean edges
+{%- if colors %}, color palette: {{ colors | join(", ") }}{% endif %}
+{%- if reference_hints %}, visual reference guidance: {{ reference_hints.descriptor }}{% endif %}
+{%- if user_extras %}, {{ user_extras }}{% endif %}
+{% endblock %}
+
+{% block negative %}
+text, words, letters, signature, watermark, multiple subjects,
+asymmetric composition, cluttered, busy, low contrast, blurry, low quality,
+{{ negative_extras }}
+{% endblock %}
+

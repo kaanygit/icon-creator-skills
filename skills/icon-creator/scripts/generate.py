@@ -16,9 +16,12 @@ from shared.errors import InputError
 from shared.image_utils import ensure_alpha, pad_square, resize, save_png
 from shared.logging_setup import get_run_logger
 from shared.openrouter_client import OpenRouterClient
+from shared.prompt_builder import PromptBuilder
+from shared.vision_analyzer import StyleHints, VisionAnalyzer
 
-DEFAULT_MODEL = "google/gemini-3-pro-image-preview"
+DEFAULT_MODEL = "google/gemini-3.1-flash-image-preview"
 DEFAULT_FALLBACK_MODELS = ["black-forest-labs/flux.2-pro"]
+DEFAULT_STYLE_PRESET = "flat"
 MASTER_SIZE = 1024
 
 
@@ -46,11 +49,29 @@ def generate_icon(
     *,
     description: str,
     output_dir: str | Path = "output",
-    model: str = DEFAULT_MODEL,
+    model: str | None = None,
+    style_preset: str = DEFAULT_STYLE_PRESET,
+    colors: list[str] | None = None,
+    reference_image: str | Path | None = None,
     client: ImageClient | None = None,
+    prompt_builder: PromptBuilder | None = None,
+    vision_analyzer: VisionAnalyzer | None = None,
     timestamp: datetime | None = None,
 ) -> IconRun:
-    prompt = build_prompt(description)
+    if not description.strip():
+        raise InputError("--description cannot be empty")
+
+    reference_hints = _analyze_reference(reference_image, vision_analyzer)
+    builder = prompt_builder or PromptBuilder()
+    prompt = builder.build(
+        skill="icon-creator",
+        type="app-icon",
+        preset=style_preset,
+        description=description,
+        colors=colors,
+        reference_hints=reference_hints,
+        model_override=model,
+    )
     timestamp = timestamp or datetime.now(UTC)
     run_id = f"{slugify(description)}-{timestamp.strftime('%Y%m%d-%H%M%S')}"
     run_dir = Path(output_dir) / run_id
@@ -59,9 +80,10 @@ def generate_icon(
     logger = get_run_logger(run_dir, "openrouter")
     image_client = client or OpenRouterClient()
     result = image_client.generate(
-        model=model,
-        fallback_models=DEFAULT_FALLBACK_MODELS,
-        prompt=prompt,
+        model=prompt.model_recommendation,
+        fallback_models=prompt.model_fallbacks or DEFAULT_FALLBACK_MODELS,
+        prompt=prompt.positive,
+        negative_prompt=prompt.negative,
         n=1,
         size=(MASTER_SIZE, MASTER_SIZE),
         run_logger=logger,
@@ -76,25 +98,36 @@ def generate_icon(
     master_path = save_png(master, run_dir / "master.png")
 
     prompt_path = run_dir / "prompt-debug.txt"
-    prompt_path.write_text(prompt + "\n", encoding="utf-8")
+    prompt_path.write_text(
+        f"[POSITIVE]\n{prompt.positive}\n\n[NEGATIVE]\n{prompt.negative}\n",
+        encoding="utf-8",
+    )
 
     metadata = {
         "skill": "icon-creator",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "run_id": run_id,
         "timestamp": timestamp.isoformat(),
         "inputs": {
             "description": description,
+            "type": "app-icon",
+            "style-preset": style_preset,
+            "colors": colors or [],
+            "reference-image": str(reference_image) if reference_image else None,
             "model": model,
         },
         "model": {
-            "id": getattr(result, "model_used", model),
+            "id": getattr(result, "model_used", prompt.model_recommendation),
             "fallback_used": bool(getattr(result, "fallback_used", False)),
+            "requested": prompt.model_recommendation,
         },
         "prompt": {
-            "positive": prompt,
-            "negative": None,
+            "positive": prompt.positive,
+            "negative": prompt.negative,
+            "hash": prompt.prompt_hash,
+            "template": prompt.template,
         },
+        "reference_hints": reference_hints.to_dict() if reference_hints else None,
         "cost": {
             "currency": "USD",
             "total": getattr(result, "cost_usd", None),
@@ -133,7 +166,29 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a single icon PNG.")
     parser.add_argument("--description", required=True, help="Icon description")
     parser.add_argument("--output-dir", default="output", help="Output root directory")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help="OpenRouter model id")
+    parser.add_argument("--model", default=None, help="OpenRouter model id override")
+    parser.add_argument(
+        "--style-preset",
+        default=DEFAULT_STYLE_PRESET,
+        choices=[
+            "flat",
+            "gradient",
+            "glass-morphism",
+            "outline",
+            "3d-isometric",
+            "skeuomorphic",
+            "neumorphic",
+            "material",
+            "ios-style",
+        ],
+        help="Icon style preset",
+    )
+    parser.add_argument(
+        "--colors",
+        default=None,
+        help="Comma-separated color palette, e.g. '#FF5733,#1A1A1A'",
+    )
+    parser.add_argument("--reference-image", default=None, help="Reference PNG/JPG path")
     return parser.parse_args()
 
 
@@ -143,9 +198,28 @@ def main() -> int:
         description=args.description,
         output_dir=args.output_dir,
         model=args.model,
+        style_preset=args.style_preset,
+        colors=parse_colors(args.colors),
+        reference_image=args.reference_image,
     )
     print(run.master_path)
     return 0
+
+
+def parse_colors(value: str | None) -> list[str] | None:
+    if not value:
+        return None
+    colors = [item.strip() for item in value.split(",") if item.strip()]
+    return colors or None
+
+
+def _analyze_reference(
+    reference_image: str | Path | None,
+    analyzer: VisionAnalyzer | None,
+) -> StyleHints | None:
+    if not reference_image:
+        return None
+    return (analyzer or VisionAnalyzer()).analyze_style(reference_image)
 
 
 if __name__ == "__main__":
