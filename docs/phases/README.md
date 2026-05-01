@@ -1,6 +1,6 @@
 # Phased build plan
 
-The toolkit is built in 18 phases. Each phase produces a concrete, testable deliverable. No phase merges to main without its acceptance test passing.
+The toolkit is built in one preflight phase plus 18 implementation phases. Each phase produces a concrete, testable deliverable. No phase merges to main without its acceptance test passing.
 
 ## Why phased
 
@@ -12,19 +12,21 @@ The toolkit is built in 18 phases. Each phase produces a concrete, testable deli
 
 Phases are ordered to deliver **the most value as early as possible**:
 
-1. **Phase 0** establishes the shared infrastructure that everything depends on
-2. **Phases 1-4** deliver the icon-creator + app-icon-pack flow — this is the most-demanded combination, immediately useful
-3. **Phase 5** rounds out app-icon-pack with the less-common platforms
-4. **Phases 6-7** vectorization (lower demand, easier to delay)
-5. **Phases 8-11** mascot-creator, the hardest skill, broken into four sub-phases by feature
-6. **Phase 12** mascot-pack
-7. **Phase 13** icon-set-creator (relatively easier given prior work)
-8. **Phases 14-17** cross-cutting polish, docs, release
+1. **Phase 00-preflight** verifies OpenRouter's current image API and model availability before code exists
+2. **Phase 00** establishes the shared infrastructure that everything depends on
+3. **Phases 1-4** deliver the icon-creator + app-icon-pack flow — this is the most-demanded combination, immediately useful
+4. **Phase 5** rounds out app-icon-pack with the less-common platforms
+5. **Phases 6-7** vectorization (lower demand, easier to delay)
+6. **Phases 8-11** mascot-creator, the hardest skill, broken into four sub-phases by feature
+7. **Phase 12** mascot-pack
+8. **Phase 13** icon-set-creator (relatively easier given prior work)
+9. **Phases 14-17** cross-cutting polish, docs, release
 
 ## Phase index
 
 | # | Skill | Version | Goal | Doc |
 |---|---|---|---|---|
+| **00-preflight** | planning | — | Verify OpenRouter API + model matrix before implementation | [phase-00-preflight.md](phase-00-preflight.md) |
 | **00** | shared/ | — | Skeleton: openrouter_client, image_utils, config | [phase-00-skeleton.md](phase-00-skeleton.md) |
 | **01** | icon-creator | v0.1 | Single shot, no presets, master only | [phase-01-icon-creator-v0.1.md](phase-01-icon-creator-v0.1.md) |
 | **02** | icon-creator | v0.2 | All 9 style presets + reference image | [phase-02-icon-creator-v0.2.md](phase-02-icon-creator-v0.2.md) |
@@ -50,7 +52,7 @@ Each phase document has a section "Acceptance criteria." A phase is **not done**
 
 - All listed automated tests pass
 - All listed manual checks have been verified
-- The acceptance test record is committed alongside the code (a `phase-N-acceptance.md` in the phase folder, recording what was tested, who, and on what date)
+- The acceptance test record is committed alongside the code/docs (a `phase-NN-acceptance.md` in the phase folder, based on [phase-acceptance-template.md](phase-acceptance-template.md))
 
 This discipline is heavy-handed by design. We're building generation quality, not just code; visual checks need to be deliberate.
 
@@ -70,6 +72,7 @@ Approximate; not a contract. Sized by complexity, not by calendar time.
 
 | Phase | Size |
 |---|---|
+| 00-preflight | XS (documentation and API/model verification only) |
 | 00 | M (shared infra is broad but well-understood) |
 | 01 | S (smallest happy path, most pieces already in place after 00) |
 | 02 | M (preset matrix + reference handling) |

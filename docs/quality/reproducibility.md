@@ -26,7 +26,7 @@ Every run writes a `metadata.json` to its output directory:
   "model": {
     "id": "google/gemini-2.5-flash-image",
     "fallback_used": false,
-    "fallback_chain": ["openai/dall-e-3"]
+    "fallback_chain": ["black-forest-labs/flux.2-pro"]
   },
 
   "prompt": {

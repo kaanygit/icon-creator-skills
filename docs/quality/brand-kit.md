@@ -33,7 +33,7 @@ A file at the project root, optional. When present, every skill run in that dire
   },
   "model_overrides": {
     "icon-creator/flat": "google/gemini-2.5-flash-image",
-    "mascot-creator/stylized/3d-toon": "black-forest-labs/flux-1.1-pro"
+    "mascot-creator/stylized/3d-toon": "black-forest-labs/flux.2-pro"
   },
   "cost": {
     "per_call_threshold_usd": 0.50,

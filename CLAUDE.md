@@ -60,6 +60,7 @@ Full rationale per decision: `docs/decisions.md`.
 | Specs of skill `<X>`? | `docs/skills/<X>.md` |
 | How does shared module `<Y>` work? | `docs/shared/<Y>.md` |
 | Style preset taxonomy? | `docs/presets/icon-styles.md`, `docs/presets/mascot-types.md` |
+| Current OpenRouter model matrix? | `docs/presets/model-matrix.md` |
 | How are prompts assembled? | `docs/presets/prompt-templates.md` |
 | Asset sizes for platform `<P>`? | `docs/platforms/<P>.md` |
 | Cross-cutting feature like cost tracking, retries, brand kit? | `docs/quality/*.md` |
@@ -116,10 +117,11 @@ Look at `docs/phases/README.md`. The phase that's not yet "done" is the next one
 
 ## Phase plan (TL;DR)
 
-18 phases. Built in dependency order. Most-valuable combination (`icon-creator` + `app-icon-pack`) ships by phase 4. Mascot (the hardest skill) split across phases 8-11.
+One preflight phase plus 18 implementation phases. Built in dependency order. Most-valuable combination (`icon-creator` + `app-icon-pack`) ships by phase 4. Mascot (the hardest skill) split across phases 8-11.
 
 | Phase | What lands |
 |---|---|
+| 00-preflight | OpenRouter API/model reality check, no code |
 | 00 | shared/ skeleton, OpenRouter client, image utils |
 | 01 | icon-creator v0.1 — single-shot, no presets |
 | 02 | icon-creator v0.2 — 9 style presets + reference image |

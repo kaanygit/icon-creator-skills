@@ -33,7 +33,7 @@ result = pb.build(
 #   negative="...",
 #   prompt_hash="abc123",
 #   model_recommendation="google/gemini-2.5-flash-image",
-#   model_fallbacks=["openai/dall-e-3"]
+#   model_fallbacks=["black-forest-labs/flux.2-pro"]
 # )
 
 # Build for mascot-creator with character anchor
@@ -105,14 +105,14 @@ icon-creator:
   flat:
     template: flat.j2
     primary_model: google/gemini-2.5-flash-image
-    fallback_models: [openai/dall-e-3]
+    fallback_models: [black-forest-labs/flux.2-pro]
     style_phrase: "flat-style icon, solid colors, no gradients"
     negative_extras: "gradient, shadow, depth"
     description: "Modern flat illustration"
   glass-morphism:
     template: glass-morphism.j2
-    primary_model: black-forest-labs/flux-1.1-pro
-    fallback_models: [openai/dall-e-3]
+    primary_model: black-forest-labs/flux.2-pro
+    fallback_models: [google/gemini-2.5-flash-image]
     style_phrase: "glass morphism, frosted blur, translucent"
     negative_extras: "opaque, flat, vector"
     description: "Modern glass / frosted-blur look"

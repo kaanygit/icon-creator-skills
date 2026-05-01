@@ -5,7 +5,7 @@ Single source of truth for talking to OpenRouter. Every skill that generates an 
 ## Responsibilities
 
 - Authenticate with OpenRouter (read `OPENROUTER_API_KEY` from env)
-- Call image-generation endpoints with the chosen model
+- Call OpenRouter's current image-generation API with the chosen model
 - Retry on transient failures (rate limit, timeouts, 5xx) with exponential backoff
 - Fall back to declared backup models when primary model unavailable
 - Track per-call cost and accumulate into a session log
@@ -19,7 +19,7 @@ from shared.openrouter_client import OpenRouterClient
 
 client = OpenRouterClient()  # reads OPENROUTER_API_KEY
 
-# text-to-image
+# text-to-image; default modalities come from shared/presets/openrouter_models.yaml
 result = client.generate(
     model="google/gemini-2.5-flash-image",
     prompt="...",
@@ -27,13 +27,13 @@ result = client.generate(
     size=(1024, 1024),
     n=3,
     seed=42,
-    fallback_models=["openai/dall-e-3"],
+    fallback_models=["black-forest-labs/flux.2-pro"],
 )
 # result: GenerateResult(images=[Image, Image, Image], cost_usd=0.0432, model_used=..., fallback_used=False)
 
 # image-to-image (when model supports)
 result = client.generate(
-    model="black-forest-labs/flux-redux",
+    model="black-forest-labs/flux.2-pro",
     prompt="...",
     reference_image=master_path,   # path or PIL.Image
     strength=0.7,
@@ -43,6 +43,75 @@ result = client.generate(
 # session cost
 print(client.session_cost_usd)
 ```
+
+## OpenRouter image-generation contract
+
+OpenRouter image generation is routed through the chat completions endpoint:
+
+```http
+POST https://openrouter.ai/api/v1/chat/completions
+```
+
+The client must build payloads from the capability matrix instead of hardcoding request shapes:
+
+```json
+{
+  "model": "google/gemini-2.5-flash-image",
+  "modalities": ["image", "text"],
+  "messages": [
+    {
+      "role": "user",
+      "content": "minimal fox app icon, transparent background"
+    }
+  ]
+}
+```
+
+Image-only models may use:
+
+```json
+{
+  "model": "black-forest-labs/flux.2-pro",
+  "modalities": ["image"],
+  "messages": [
+    {
+      "role": "user",
+      "content": "minimal fox app icon, transparent background"
+    }
+  ]
+}
+```
+
+The expected image response shape is:
+
+```json
+{
+  "choices": [
+    {
+      "message": {
+        "images": [
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "data:image/png;base64,..."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+The client should parse `choices[*].message.images[*].image_url.url`, support base64 data URLs, and save decoded images through `image_utils`.
+
+Model discovery for preflight and release checks:
+
+```http
+GET https://openrouter.ai/api/v1/models?output_modalities=image
+```
+
+Official references live in [docs/presets/model-matrix.md](../presets/model-matrix.md).
 
 ## Internal behavior
 
@@ -89,11 +158,17 @@ Pricing data lives in `shared/presets/openrouter_pricing.yaml`, refreshed period
 Not all models on OpenRouter expose image-to-image cleanly. The client checks model capability from `shared/presets/openrouter_models.yaml`:
 
 ```yaml
-- id: black-forest-labs/flux-redux
-  capabilities: [text-to-image, image-to-image]
-  image_to_image_param: reference_image
-- id: google/gemini-2.5-flash-image
-  capabilities: [text-to-image]
+models:
+  black-forest-labs/flux.2-pro:
+    supports_text_to_image: true
+    supports_image_input: true
+    supports_image_edit: true
+    default_modalities: [image]
+  google/gemini-2.5-flash-image:
+    supports_text_to_image: true
+    supports_image_input: true
+    supports_image_edit: true
+    default_modalities: [image, text]
 ```
 
 If the user requests image-to-image on a text-only model, the client either:

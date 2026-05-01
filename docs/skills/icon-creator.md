@@ -110,15 +110,15 @@ Preset-to-model mapping lives in `shared/presets/icon-styles.yaml`. Defaults:
 
 | Preset | Primary model | Fallback |
 |---|---|---|
-| `flat` | `google/gemini-2.5-flash-image` | `openai/dall-e-3` |
-| `gradient` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux-1.1-pro` |
-| `glass-morphism` | `black-forest-labs/flux-1.1-pro` | `openai/dall-e-3` |
-| `outline` | `google/gemini-2.5-flash-image` | `openai/dall-e-3` |
-| `3d-isometric` | `black-forest-labs/flux-1.1-pro` | `openai/dall-e-3` |
-| `skeuomorphic` | `black-forest-labs/flux-1.1-pro` | `openai/dall-e-3` |
-| `neumorphic` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux-1.1-pro` |
-| `material` | `google/gemini-2.5-flash-image` | `openai/dall-e-3` |
-| `ios-style` | `black-forest-labs/flux-1.1-pro` | `openai/dall-e-3` |
+| `flat` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
+| `gradient` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
+| `glass-morphism` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
+| `outline` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
+| `3d-isometric` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
+| `skeuomorphic` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
+| `neumorphic` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
+| `material` | `google/gemini-2.5-flash-image` | `black-forest-labs/flux.2-pro` |
+| `ios-style` | `black-forest-labs/flux.2-pro` | `google/gemini-2.5-flash-image` |
 
 ## Prompt template (sketch)
 

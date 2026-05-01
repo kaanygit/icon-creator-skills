@@ -79,7 +79,7 @@ By skill:
 
 By model:
   google/gemini-2.5-flash-image    $14.20  (612 calls)
-  black-forest-labs/flux-1.1-pro   $19.92  (186 calls)
+  black-forest-labs/flux.2-pro     $19.92  (186 calls)
 ```
 
 ```
@@ -97,10 +97,10 @@ Last 10 calls:
 google/gemini-2.5-flash-image:
   per_image_usd: 0.0144
   notes: "Pricing as of 2026-04, OpenRouter listed rate"
-black-forest-labs/flux-1.1-pro:
+black-forest-labs/flux.2-pro:
   per_image_usd: 0.04
   notes: "..."
-openai/dall-e-3:
+black-forest-labs/flux.2-flex:
   per_image_usd: 0.04
   notes: "Standard quality 1024x1024"
 ```
