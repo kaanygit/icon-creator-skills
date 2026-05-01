@@ -1,0 +1,16 @@
+platform: android
+density_icons:
+  - {directory: mipmap-mdpi, filename: ic_launcher.png, size: 48}
+  - {directory: mipmap-hdpi, filename: ic_launcher.png, size: 72}
+  - {directory: mipmap-xhdpi, filename: ic_launcher.png, size: 96}
+  - {directory: mipmap-xxhdpi, filename: ic_launcher.png, size: 144}
+  - {directory: mipmap-xxxhdpi, filename: ic_launcher.png, size: 192}
+adaptive_icon:
+  canvas: 432
+  safe_zone: 288
+  foreground: drawable/ic_launcher_foreground.png
+  background: drawable/ic_launcher_background.png
+  xml: mipmap-anydpi-v26/ic_launcher.xml
+extra:
+  notification: {filename: notification/ic_stat_24.png, size: 24}
+  play_store: {filename: play-store/ic_launcher_512.png, size: 512, opaque: true}

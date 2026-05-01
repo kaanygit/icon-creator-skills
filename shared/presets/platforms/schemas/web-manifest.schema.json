@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["name", "short_name", "icons"],
+  "properties": {
+    "name": {"type": "string"},
+    "short_name": {"type": "string"},
+    "icons": {"type": "array"}
+  }
+}

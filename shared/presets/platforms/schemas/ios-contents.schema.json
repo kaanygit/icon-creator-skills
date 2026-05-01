@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "required": ["images", "info"],
+  "properties": {
+    "images": {"type": "array"},
+    "info": {"type": "object"}
+  }
+}

@@ -1,0 +1,10 @@
+platform: windows
+files:
+  - {filename: Square44x44Logo.png, size: [44, 44]}
+  - {filename: Square71x71Logo.png, size: [71, 71]}
+  - {filename: Square150x150Logo.png, size: [150, 150]}
+  - {filename: Square310x310Logo.png, size: [310, 310]}
+  - {filename: Wide310x150Logo.png, size: [310, 150]}
+  - {filename: StoreLogo.png, size: [50, 50]}
+metadata:
+  - manifest-snippet.xml

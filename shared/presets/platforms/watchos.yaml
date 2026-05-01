@@ -1,0 +1,14 @@
+platform: watchos
+root: watchos/AppIcon.appiconset
+contents_json: true
+images:
+  - {filename: icon-watch-24.png, size: 48, point_size: "24x24", idiom: watch, scale: 2x, role: notificationCenter, subtype: 38mm}
+  - {filename: icon-watch-27.5.png, size: 55, point_size: "27.5x27.5", idiom: watch, scale: 2x, role: notificationCenter, subtype: 42mm}
+  - {filename: icon-watch-29@2x.png, size: 58, point_size: "29x29", idiom: watch, scale: 2x, role: companionSettings}
+  - {filename: icon-watch-29@3x.png, size: 87, point_size: "29x29", idiom: watch, scale: 3x, role: companionSettings}
+  - {filename: icon-watch-40@2x.png, size: 80, point_size: "40x40", idiom: watch, scale: 2x, role: appLauncher, subtype: 38mm}
+  - {filename: icon-watch-44@2x.png, size: 88, point_size: "44x44", idiom: watch, scale: 2x, role: appLauncher, subtype: 40mm}
+  - {filename: icon-watch-86@2x.png, size: 172, point_size: "86x86", idiom: watch, scale: 2x, role: quickLook, subtype: 38mm}
+  - {filename: icon-watch-98@2x.png, size: 196, point_size: "98x98", idiom: watch, scale: 2x, role: quickLook, subtype: 42mm}
+  - {filename: icon-watch-50@2x.png, size: 100, point_size: "50x50", idiom: watch, scale: 2x, role: quickLook, subtype: 44mm}
+  - {filename: icon-watch-1024.png, size: 1024, point_size: "1024x1024", idiom: watch-marketing, scale: 1x, opaque: true}

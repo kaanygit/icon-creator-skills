@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image
@@ -88,6 +89,84 @@ def save_png(image: Image.Image, path: str | Path) -> Path:
     """Save an image as PNG."""
 
     return save_image(ensure_alpha(image), path, format="PNG")
+
+
+def parse_hex_color(value: str) -> RGBA:
+    """Parse #RGB or #RRGGBB into an opaque RGBA tuple."""
+
+    raw = value.strip().lstrip("#")
+    if len(raw) == 3:
+        raw = "".join(character * 2 for character in raw)
+    if len(raw) != 6:
+        raise InputError(f"Expected hex color like #FFFFFF, got: {value}")
+    try:
+        red = int(raw[0:2], 16)
+        green = int(raw[2:4], 16)
+        blue = int(raw[4:6], 16)
+    except ValueError as exc:
+        raise InputError(f"Invalid hex color: {value}") from exc
+    return red, green, blue, 255
+
+
+def composite_on_bg(
+    image_or_path: Image.Image | str | Path,
+    *,
+    bg_color: str = "#FFFFFF",
+    size: tuple[int, int] | None = None,
+) -> Image.Image:
+    """Composite an image onto a solid opaque background."""
+
+    image = (
+        load_image(image_or_path)
+        if isinstance(image_or_path, str | Path)
+        else image_or_path.copy()
+    )
+    rgba = ensure_alpha(image)
+    if size and rgba.size != size:
+        rgba = rgba.resize(size, Image.Resampling.LANCZOS)
+
+    background = Image.new("RGBA", rgba.size, parse_hex_color(bg_color))
+    background.alpha_composite(rgba)
+    return background
+
+
+def write_ico_multires(
+    path: str | Path,
+    entries: Iterable[tuple[int, Image.Image]],
+) -> Path:
+    """Write a multi-resolution ICO using Pillow."""
+
+    normalized: list[Image.Image] = []
+    for size, image in sorted(entries, key=lambda item: item[0]):
+        if image.width != image.height:
+            raise InputError("ICO entries must be square")
+        normalized.append(ensure_alpha(image).resize((size, size), Image.Resampling.LANCZOS))
+
+    if not normalized:
+        raise InputError("Cannot write ICO with no entries")
+
+    resolved = Path(path)
+    resolved.parent.mkdir(parents=True, exist_ok=True)
+    sizes = [(image.width, image.height) for image in normalized]
+    normalized[-1].save(resolved, format="ICO", sizes=sizes, append_images=normalized[:-1])
+    return resolved
+
+
+def rasterize_svg(path: str | Path, size: tuple[int, int]) -> Image.Image:
+    """Rasterize an SVG when cairosvg is installed."""
+
+    try:
+        import cairosvg
+    except ImportError as exc:
+        raise InputError(
+            "SVG input requires cairosvg. Install it or use a PNG master for app-icon-pack."
+        ) from exc
+
+    png_bytes = cairosvg.svg2png(url=str(path), output_width=size[0], output_height=size[1])
+    if not isinstance(png_bytes, bytes):
+        raise InputError(f"Could not rasterize SVG: {path}")
+    with Image.open(BytesIO(png_bytes)) as image:
+        return ensure_alpha(image)
 
 
 def compose_grid(

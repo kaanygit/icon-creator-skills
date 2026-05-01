@@ -1,0 +1,22 @@
+platform: ios
+root: ios/AppIcon.appiconset
+contents_json: true
+images:
+  - {filename: icon-20@2x.png, size: 40, point_size: "20x20", idiom: iphone, scale: 2x}
+  - {filename: icon-20@3x.png, size: 60, point_size: "20x20", idiom: iphone, scale: 3x}
+  - {filename: icon-29@2x.png, size: 58, point_size: "29x29", idiom: iphone, scale: 2x}
+  - {filename: icon-29@3x.png, size: 87, point_size: "29x29", idiom: iphone, scale: 3x}
+  - {filename: icon-40@2x.png, size: 80, point_size: "40x40", idiom: iphone, scale: 2x}
+  - {filename: icon-40@3x.png, size: 120, point_size: "40x40", idiom: iphone, scale: 3x}
+  - {filename: icon-60@2x.png, size: 120, point_size: "60x60", idiom: iphone, scale: 2x}
+  - {filename: icon-60@3x.png, size: 180, point_size: "60x60", idiom: iphone, scale: 3x}
+  - {filename: icon-20.png, size: 20, point_size: "20x20", idiom: ipad, scale: 1x}
+  - {filename: icon-20@2x-ipad.png, size: 40, point_size: "20x20", idiom: ipad, scale: 2x}
+  - {filename: icon-29.png, size: 29, point_size: "29x29", idiom: ipad, scale: 1x}
+  - {filename: icon-29@2x-ipad.png, size: 58, point_size: "29x29", idiom: ipad, scale: 2x}
+  - {filename: icon-40.png, size: 40, point_size: "40x40", idiom: ipad, scale: 1x}
+  - {filename: icon-40@2x-ipad.png, size: 80, point_size: "40x40", idiom: ipad, scale: 2x}
+  - {filename: icon-76.png, size: 76, point_size: "76x76", idiom: ipad, scale: 1x}
+  - {filename: icon-76@2x.png, size: 152, point_size: "76x76", idiom: ipad, scale: 2x}
+  - {filename: icon-83.5@2x.png, size: 167, point_size: "83.5x83.5", idiom: ipad, scale: 2x}
+  - {filename: icon-1024.png, size: 1024, point_size: "1024x1024", idiom: ios-marketing, scale: 1x, opaque: true}

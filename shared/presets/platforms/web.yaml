@@ -1,0 +1,14 @@
+platform: web
+files:
+  - {filename: favicon.ico, sizes: [16, 32, 48]}
+  - {filename: favicon-16x16.png, size: 16}
+  - {filename: favicon-32x32.png, size: 32}
+  - {filename: apple-touch-icon.png, size: 180, opaque: true}
+  - {filename: android-chrome-192x192.png, size: 192}
+  - {filename: android-chrome-512x512.png, size: 512}
+  - {filename: mstile-150x150.png, size: 150, opaque: true}
+  - {filename: og-image.png, size: [1200, 630], opaque: true}
+metadata:
+  - manifest.json
+  - browserconfig.xml
+  - safari-pinned-tab.svg

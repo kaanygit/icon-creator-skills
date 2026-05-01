@@ -30,7 +30,12 @@ dev = [
 include = ["shared*"]
 
 [tool.setuptools.package-data]
-shared = ["presets/*.yaml", "presets/prompt_templates/**/*.j2"]
+shared = [
+  "presets/*.yaml",
+  "presets/platforms/*.yaml",
+  "presets/platforms/schemas/*.json",
+  "presets/prompt_templates/**/*.j2",
+]
 
 [tool.ruff]
 line-length = 100
